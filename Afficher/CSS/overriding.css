@@ -1,0 +1,16 @@
+/* -- Overriding Bootstrap classics -- */
+
+
+body {
+	background-image: url('/Afficher/CSS/Images/Background.png');
+	background-color: #307AC3;
+	background-size: 100%;
+}
+
+h1 {
+	font-family: pr-columbandemo;
+}
+
+.navbar {
+	border-radius: 4px;
+}
