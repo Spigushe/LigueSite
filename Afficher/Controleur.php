@@ -1,4 +1,11 @@
 <?php
+// Helper
+if (isset($_GET['saison']) && isset($_GET['ligue'])) {
+	require_once("Afficher/Resultats.php");
+} else {
+	require_once("Afficher/Resultats_globaux.php");
+}
+
 function getContenu () {
 	if (isset($_GET['saison']) && isset($_GET['ligue'])) {
 		if ($_GET['ligue'] == 'Placement') {
@@ -12,7 +19,6 @@ function getContenu () {
 	// Page d'accueil
 	require_once('Afficher/Elements/Saison.php');
 	return ResumeLigue(SaisonEnCours());
-
 }
 
 require_once('Afficher/Vue.php');
