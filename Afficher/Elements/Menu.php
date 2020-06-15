@@ -24,7 +24,7 @@
 					<!-- Séparateur de liste -->
 					<div class="dropdown-divider"></div>
 					<!-- Séparateur de liste -->
-					<a class="dropdown-item" href="/Saison-2/Ligue-Bois">Ligue Bois</a>
+					<a class="dropdown-item disabled" href="/Saison-2/Ligue-Bois">Ligue Bois</a>
 					<a class="dropdown-item" href="/Saison-2/Ligue-Bronze">Ligue Bronze</a>
 					<a class="dropdown-item" href="/Saison-2/Ligue-Argent">Ligue Argent</a>
 					<a class="dropdown-item" href="/Saison-2/Ligue-Or">Ligue Or</a>
