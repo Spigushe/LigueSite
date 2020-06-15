@@ -1,21 +1,22 @@
 <?php
-// Helper
-if (isset($_GET['saison']) && isset($_GET['ligue'])) {
-	require_once("Afficher/Resultats.php");
-} else {
-	require_once("Afficher/Resultats_globaux.php");
-}
 
-function getContenu ($resultats) {
+function getContenu () {
 	if (isset($_GET['saison']) && isset($_GET['ligue'])) {
-		if ($_GET['ligue'] == 'Placement') { // Résumé placements
-			require_once('Afficher/Elements/Placement.php');
-		} else if ($_GET['ligue'] == 'Playoffs') { // Résumé playoffs
-			require_once('Afficher/Elements/Playoffs.php');
-		} else require_once('Afficher/Elements/Ligue.php'); // Résumé Ligue
+		// Affichage
+		if ($_GET['ligue'] == 'Placement') {
+			// Résumé placements
+			//require_once('Afficher/Elements/Placement.php');
+		} else if ($_GET['ligue'] == 'Playoffs') {
+			// Résumé playoffs
+			//require_once('Afficher/Elements/Playoffs.php');
+		} else {
+			// Résumé Ligue
+			require_once('Afficher/Elements/Ligue.php');
+		}
 	}
+	// Page d'accueil
 	require_once('Afficher/Elements/Saison.php'); // Page d'accueil
-	return Affichage($resultats);
+	return Affichage($helper);
 }
 
 require_once('Afficher/Vue.php');
