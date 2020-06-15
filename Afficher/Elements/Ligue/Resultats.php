@@ -40,8 +40,8 @@ $helper = array(); /** VARIABLE DE STOCKAGE **/
 $sql = "SELECT liste_decks FROM ligues
 		WHERE num_saison = :s AND nom_ligue = :l;";
 // On prépare les variables de base
-$helper['infos']['saison'] = $parametres['saison'];
-$helper['infos']['ligue']  = $parametres['ligue'];
+$helper['infos']['saison'] = $_GET['saison'];
+$helper['infos']['ligue']  = $_GET['ligue'];
 // On prépare le tableau de données
 $donnees = array(
 	':l' => $helper['infos']['ligue'],
