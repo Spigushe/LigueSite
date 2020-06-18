@@ -41,10 +41,10 @@ $sql = "SELECT liste_decks FROM ligues
 		WHERE num_saison = :s AND nom_ligue = :l;";
 // On prépare les variables de base
 $helper['infos']['saison'] = $_GET['saison'];
-$helper['infos']['ligue']  = $_GET['ligue'];
+$helper['infos']['ligue']  = preg_split("/-/",$_GET['ligue'])[0];
 // On prépare le tableau de données
 $donnees = array(
-	':l' => $helper['infos']['ligue'],
+	':l' => $_GET['ligue'],
 	':s' => $helper['infos']['saison'],
 );
 // On exécute la requête

@@ -2,8 +2,7 @@
 // Fonctions annexes
 require_once('Afficher/Elements/Modele.php');
 require_once('Afficher/Elements/Ligue/Modele.php');
-// Helper
-require_once("Afficher/Elements/Ligue/Resultats.php");
+require_once("Afficher/Elements/Ligue/Resultats.php"); // Helper
 
 function Affichage ($helper) {
 	$affichage  = "<div class='my-5'></div>";
