@@ -8,7 +8,7 @@ function getContenu ()
 		if (preg_match("/Placement/", $_GET['ligue']))
 		{
 			// Résumé placements
-			require_once('Afficher/Elements/Placement.php');
+			require_once('Afficher/Elements/Placement/Controleur.php');
 		}
 		else if (preg_match("/Playoff/", $_GET['ligue']))
 		{
@@ -18,7 +18,7 @@ function getContenu ()
 		else
 		{
 			// Résumé Ligue
-			require_once('Afficher/Elements/Ligue.php');
+			require_once('Afficher/Elements/Ligue/Controleur.php');
 		}
 	}
 	else

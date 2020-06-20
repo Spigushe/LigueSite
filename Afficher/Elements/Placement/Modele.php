@@ -1,7 +1,11 @@
 <?php
-/************
-TableauLigues
-************/
+/*****************************/
+/*****************************/
+/******                 ******/
+/******    NOM LIGUE    ******/
+/******                 ******/
+/*****************************/
+/*****************************/
 function getLigue($int) {
 	$ligues  = array();
 	$ligues[] = "Bois / Wood";
@@ -11,41 +15,14 @@ function getLigue($int) {
 	$ligues[] = "Platine / Platinium";
 	return $ligues[$int];
 }
-/************
-TableauMetagame
-************/
-function tableauMetagame ($helper) {
-	// Transposition du helper
-	sort($helper['infos']['pseudo']);
-	$lignes = array();
-	for ($i = 0; $i < count($helper['infos']['pseudo']); $i++) {
-		$cle = $helper['infos']['pseudo'][$i];
-		if (!in_array($helper[$cle]['general'], $lignes)) {
-			$lignes[$helper[$cle]['general']]['general'] = afficheGeneralMetagame($helper[$cle]['general']);
-			$lignes[$helper[$cle]['general']]['joueurs'][] = $cle;
-			$lignes[$helper[$cle]['general']][$cle]['parties'] = $helper[$cle]['victoires'] . " - " . $helper[$cle]['defaites'];
-			$lignes[$helper[$cle]['general']][$cle]['ligue'] = min(3,$helper[$cle]['victoires']);
-		}
-	}
-	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
-	ob_start();
-	require_once('Afficher/Elements/Placement/TableauMetagame.php');
-	return ob_get_clean();
-}
 
-/************
-TableauMetagame
-************/
-function tableauParties ($helper) {
-	sort($helper['infos']['pseudo']);
-	ob_start();
-	require_once('Afficher/Elements/Placement/TableauParties.php');
-	return ob_get_clean();
-}
-
-/*
-
-*/
+/*****************************/
+/*****************************/
+/******                 ******/
+/****** GENERALMETAGAME ******/
+/******                 ******/
+/*****************************/
+/*****************************/
 function afficheGeneralMetagame ($texte) {
 	// De quoi est composée la command zone ?
 	$contraintes = "";
@@ -78,6 +55,13 @@ function afficheGeneralMetagame ($texte) {
 	return $retour;
 }
 
+/*****************************/
+/*****************************/
+/******                 ******/
+/****** GENERALRESULTAT ******/
+/******                 ******/
+/*****************************/
+/*****************************/
 function afficheGeneralInline ($texte) {
 	// De quoi est composée la command zone ?
 	$contraintes = "";
@@ -115,35 +99,5 @@ function afficheGeneralInline ($texte) {
 		}
 	}
 
-	return $retour;
-}
-
-/**********
-afficheGroupe
-**********/
-function afficheGroupe ($groupe,$infos) {
-	// Définition des variables
-	$max    = $infos['maxMatches'];
-	$played = $infos['matches'];
-	$status = $infos['avancement'];
-	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
-	ob_start(); ?>
-	<div>
-		<p class='h3 text-decoration-none'>
-			<a href="/Saison-<?= $_GET['saison'] ?>/Ligue-Placement-<?= $groupe ?>" class="text-reset">
-				Groupe <?= $groupe ?>
-			</a>
-		</p>
-		<div class="progress my-2" style="height: 20px;">
-			<div class="progress-bar bg-info" role="progressbar" aria-valuenow="25"
-				aria-valuemin="0" aria-valuemax="<?= $max ?>" style="width:<?= $status ?>%" >
-			<?= $status ?> %</div>
-		</div>
-
-		<p class="text-center">
-			<i><?= $played ?> matches joués sur <?= $max ?></i>
-		</p>
-	</div>
-	<?php $retour = ob_get_clean();
 	return $retour;
 }
