@@ -39,7 +39,7 @@
 	<div class="pb-3">
 	</div>
 
-	<footer class="container fixed-bottom text-center">
+	<footer class="container sticky-bottom text-center">
 	2020 - <b>Commander League</b>, un projet de Guillaume "Cleomene" Cailliez avec l'assistance de Geoffrey "Linkanor" et de Martin "Spigushe"
 	</footer>
 </div>

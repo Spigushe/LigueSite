@@ -1,4 +1,8 @@
 <?php
+function Affichage($helper = "") {
+	return "";
+}
+
 function ResumeLigue ($saison) {
 	$ligues = LiguesEnCours($saison);
 

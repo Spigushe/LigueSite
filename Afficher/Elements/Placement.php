@@ -1,27 +1,13 @@
 <?php
-function Affichage ( $saison = "" , $ligue = "" ) {
-	$infos = getInformationsDansSaisonEtLigue($saison,$ligue);
-	$resultats = getResultatsDansSaisonEtLigue($saison,$ligue);
-	
-	$affichage = "";
-	$affichage .= "<h3 class='mt-3'>Détail du metagame</h3>";
-	$affichage .= tableauMetagame ($infos, $resultats);
-	$affichage .= "<div class='my-5'></div>";
-	$affichage .= "<h3 class='mt-3'>Résumé des parties</h3>";
-	$affichage .= tableauParties ($infos, $resultats);
-	$affichage .= "<div class='my-5'></div>";
-	
-	return $affichage;
-}
+// Fonctions annexes
+require_once('Afficher/Elements/Modele.php');
+require_once('Afficher/Elements/Placement/Modele.php');
 
-function tableauMetagame ($infos, $resultats) {
-	ob_start();
-	require_once('Afficher/Elements/Tableaux/TableauMetagame.php');
-	return ob_get_clean();
-}
-
-function tableauParties ($infos, $resultats) {
-	ob_start();
-	require_once('Afficher/Elements/Tableaux/TableauParties.php');
-	return ob_get_clean();
+// On choisit les bons fichiers
+if (preg_match("/[0-9]/",$_GET['ligue'])) {
+	require_once("Afficher/Elements/Ligue/Resultats.php"); // Helper
+	require_once("Afficher/Elements/Placement/Groupe.php"); // Vue
+} else {
+	require_once("Afficher/Elements/Placement/Resultats.php"); // Helper
+	require_once("Afficher/Elements/Placement/Global.php"); // vue
 }

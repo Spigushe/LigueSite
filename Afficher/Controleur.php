@@ -1,13 +1,14 @@
 <?php
 
-function getContenu () {
+function getContenu ()
+{
 	if (isset($_GET['saison']) && isset($_GET['ligue']))
 	{
 		// Affichage
-		if (preg_match("/Placements/", $_GET['ligue']))
+		if (preg_match("/Placement/", $_GET['ligue']))
 		{
 			// Résumé placements
-			//require_once('Afficher/Elements/Placement.php');
+			require_once('Afficher/Elements/Placement.php');
 		}
 		else if (preg_match("/Playoff/", $_GET['ligue']))
 		{

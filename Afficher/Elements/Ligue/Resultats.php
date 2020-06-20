@@ -92,7 +92,6 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 	);
 }
 
-
 /*****************************/
 /*****************************/
 /******                 ******/
@@ -121,6 +120,7 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 			'p_deck'	=> $resultat['id_deck1'],
 			'o_result'	=> $resultat['resultat_deck2'],
 			'o_deck'	=> $resultat['id_deck2'],
+			'o_pseudo'	=> $helper[$resultat['id_deck2']]['pseudo'],
 			'string'	=> $resultat['resultat_deck1'] . " - " . $resultat['resultat_deck2'],
 			'result'	=>
 				($resultat['resultat_deck1'] > $resultat['resultat_deck2']) ?
@@ -136,6 +136,10 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 				($resultat['resultat_deck1'] > $resultat['resultat_deck2']) ?
 					$helper[$resultat['id_deck1']]['id_discord'] :
 					$helper[$resultat['id_deck2']]['id_discord'],
+			'w_general' =>
+				($resultat['resultat_deck1'] > $resultat['resultat_deck2']) ?
+					$helper[$resultat['id_deck1']]['general'] :
+					$helper[$resultat['id_deck2']]['general'],
 		);
 		// Joueur 2 - Id_Deck
 		$helper[$id2]['parties'][$id1] = array(
@@ -143,6 +147,7 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 			'p_deck'	=> $resultat['id_deck2'],
 			'o_result'	=> $resultat['resultat_deck1'],
 			'o_deck'	=> $resultat['id_deck1'],
+			'o_pseudo'	=> $helper[$resultat['id_deck1']]['pseudo'],
 			'string'	=> $resultat['resultat_deck2'] . " - " . $resultat['resultat_deck1'],
 			'result'	=> ($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
 					'win' : 'lose',
@@ -157,6 +162,10 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 				($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
 					$helper[$resultat['id_deck2']]['id_discord'] :
 					$helper[$resultat['id_deck1']]['id_discord'],
+			'w_general' =>
+				($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
+					$helper[$resultat['id_deck2']]['general'] :
+					$helper[$resultat['id_deck1']]['general'],
 		);
 		// Répartition des infos
 		// Pseudo
