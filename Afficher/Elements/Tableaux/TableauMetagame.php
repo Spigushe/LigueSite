@@ -3,7 +3,6 @@ require_once("Afficher/Elements/Tableaux/Vue_TableauMetagame.php");
 
 function afficherTableauMetagame ($helper) {
 	// Transposition du helper
-	sort($helper['infos']['pseudo']);
 	$lignes = array();
 	for ($i = 0; $i < count($helper['infos']['pseudo']); $i++) {
 		$cle = $helper['infos']['pseudo'][$i];

@@ -11,7 +11,6 @@ function tableauJoueurs ($helper) {
 		</thead>
 		<tbody>
 			<?php
-			sort($helper['infos']['pseudo']);
 			for ($i = 0; $i < count($helper['infos']['pseudo']); $i++) {
 				$cle = $helper['infos']['pseudo'][$i];
 			?>
