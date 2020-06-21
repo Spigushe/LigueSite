@@ -1,18 +1,32 @@
 <?php
-function getContenu () {
-	if (isset($_GET['saison']) && isset($_GET['ligue'])) {
-		if ($_GET['ligue'] == 'Placement') {
-			require_once('Afficher/Elements/Placement.php');
-		} else if ($_GET['ligue'] == 'Playoffs') {
-			require_once('Afficher/Elements/Playoffs.php');
-		} else require_once('Afficher/Elements/Ligue.php');
-		return Affichage($_GET['saison'],$_GET['ligue']);
+
+function getContenu ()
+{
+	if (isset($_GET['saison']) && isset($_GET['ligue']))
+	{
+		// Affichage
+		if (preg_match("/Placement/", $_GET['ligue']))
+		{
+			// Résumé placements
+			require_once('Afficher/Elements/Placement/Controleur.php');
+		}
+		else if (preg_match("/Playoff/", $_GET['ligue']))
+		{
+			// Résumé playoffs
+			//require_once('Afficher/Elements/Playoffs.php');
+		}
+		else
+		{
+			// Résumé Ligue
+			require_once('Afficher/Elements/Ligue/Controleur.php');
+		}
 	}
-
-	// Page d'accueil
-	require_once('Afficher/Elements/Saison.php');
-	return ResumeLigue(SaisonEnCours());
-
+	else
+	{
+		// Page d'accueil
+		require_once('Afficher/Elements/Saison.php');
+	}
+	return Affichage($helper);
 }
 
 require_once('Afficher/Vue.php');

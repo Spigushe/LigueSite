@@ -17,14 +17,34 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Saison 2
+				Saison 3
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item disabled" href="/Saison-2/Ligue-Placement">Placements</a>
+					<a class="dropdown-item " href="/Saison-3/Ligue-Placement">Placements</a>
 					<!-- Séparateur de liste -->
 					<div class="dropdown-divider"></div>
 					<!-- Séparateur de liste -->
-					<a class="dropdown-item" href="/Saison-2/Ligue-Bois">Ligue Bois</a>
+					<a class="dropdown-item disabled" href="/Saison-3/Ligue-Bois">Ligue Bois</a>
+					<a class="dropdown-item disabled" href="/Saison-3/Ligue-Bronze">Ligue Bronze</a>
+					<a class="dropdown-item disabled" href="/Saison-3/Ligue-Argent">Ligue Argent</a>
+					<a class="dropdown-item disabled" href="/Saison-3/Ligue-Or">Ligue Or</a>
+					<a class="dropdown-item disabled" href="/Saison-3/Ligue-Platine">Ligue Platine</a>
+					<!-- Séparateur de liste -->
+					<div class="dropdown-divider"></div>
+					<!-- Séparateur de liste -->
+					<a class="dropdown-item disabled" href="/Saison-3/Ligue-Playoffs">Play-offs</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Saison 2
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/Saison-2/Ligue-Placement">Placements</a>
+					<!-- Séparateur de liste -->
+					<div class="dropdown-divider"></div>
+					<!-- Séparateur de liste -->
+					<a class="dropdown-item disabled" href="/Saison-2/Ligue-Bois">Ligue Bois</a>
 					<a class="dropdown-item" href="/Saison-2/Ligue-Bronze">Ligue Bronze</a>
 					<a class="dropdown-item" href="/Saison-2/Ligue-Argent">Ligue Argent</a>
 					<a class="dropdown-item" href="/Saison-2/Ligue-Or">Ligue Or</a>

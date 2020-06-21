@@ -5,14 +5,14 @@
 	<meta charset="utf-8">
 	<base href="/">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="/Afficher/Addons/darkly.theme.bootstrap.css">
-	
+
 	<!-- Font Style Definition -->
 	<link rel="stylesheet" href="/Afficher/CSS/Polices/pr-columbandemo.css">
 	<link rel="stylesheet" href="/Afficher/CSS/overriding.css">
-	
+
 	<title>Commander League</title>
 </head>
 <body>
@@ -21,25 +21,25 @@
 		<img src="Afficher/CSS/Images/Logo.png" height="200" class='float-right mx-2' alt="">
 		Commander League
 	</h1>
-	
+
 	<?php require_once('Afficher/Elements/Menu.php'); ?>
-	
+
 	<?php if (isset($_GET['saison']) && isset($_GET['ligue'])) : ?>
-		<h2 class="display-4 mb-5">Saison <?= $_GET['saison'] ?> - Ligue <?= ucfirst($_GET['ligue']) ?></h2>
+		<div class="display-4 mb-5">Saison <?= $_GET['saison'] ?> - Ligue <?= ucfirst($_GET['ligue']) ?></div>
 	<?php endif; ?>
-	
+
 	<?php if (isset($_GET['saison']) && !isset($_GET['ligue'])) : ?>
-		<h2 class="display-5 mb-5">Avancement de la saison en cours</h2>
+		<div class="display-5 mb-5">Avancement de la saison en cours</div>
 	<?php endif; ?>
-	
+
 	<div id="contenu">
 	<?= $contenu ?>
 	</div>
-	
+
 	<div class="pb-3">
 	</div>
-	
-	<footer class="container fixed-bottom text-center">
+
+	<footer class="container sticky-bottom text-center">
 	2020 - <b>Commander League</b>, un projet de Guillaume "Cleomene" Cailliez avec l'assistance de Geoffrey "Linkanor" et de Martin "Spigushe"
 	</footer>
 </div>
@@ -67,7 +67,7 @@ $(document).ready(function() {
 			{'searchable'	: false, 'targets': [2,3]},
 		]
 	});
-	
+
     $('#tableMetagame').DataTable({
 		"order": [[ 0, "asc"]],
 		"aaSorting": [],
@@ -76,7 +76,7 @@ $(document).ready(function() {
 			//{'searchable'	: false, 'targets': [2]},
 		]
 	});
-	
+
 	$('#tableJoueurs').DataTable({
 		"order": [[ 0, "asc"]],
 		"aaSorting": [],

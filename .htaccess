@@ -1,0 +1,16 @@
+#--------------------------------------------------
+# Répertoire : /
+#--------------------------------------------------
+
+# Le serveur doit suivre les liens symboliques :
+Options +FollowSymlinks
+
+# Activation du module de réécriture d'URL :
+RewriteEngine on
+
+#--------------------------------------------------
+# Règles de réécriture d'URL :
+#--------------------------------------------------
+
+# Quand on indique le format :
+RewriteRule ^Saison-([0-9]+)?/?Ligue-([a-zA-Z0-9\-]+)?/?$ index.php?page=Afficher&saison=$1&ligue=$2 [NC,L]

@@ -1,9 +1,31 @@
-<?php require_once('Afficher/Elements/Barres/Modele.php'); ?>
-<div class="progress my-2" style="height: 20px;">
-	<div class="progress-bar bg-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="<?= getMaxMatches() ?>" style="width:<?= getAvancement() ?>%" >
-	<?= round(getMatchesPlayed()/getMaxMatches()*100,2) ?> %</div>
-</div>
+<?php
+require_once("Afficher/Elements/Barres/Vue_BarreAvancement.php");
 
-<p class="text-center">
-	<i><?= getMatchesPlayed() ?> matches joués sur <?= getMaxMatches() ?></i>
-</p>
+function progressLigue ($ligue) {
+	// Définition des variables
+	$max   = $ligue['infos']['max'];
+	$played = $ligue['infos']['joues'];
+	$status = round( $played / $max * 100 , 2);
+	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
+	return barreAvancement ($max , $played , $status);
+}
+
+
+function afficheGroupe ($groupe,$infos) {
+	// Définition des variables
+	$max    = $infos['maxMatches'];
+	$played = $infos['matches'];
+	$status = $infos['avancement'];
+	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
+	ob_start(); ?>
+	<div>
+		<p class='h3 text-decoration-none'>
+			<a href="/Saison-<?= $_GET['saison'] ?>/Ligue-Placement-<?= $groupe ?>" class="text-reset">
+				Groupe <?= $groupe ?>
+			</a>
+		</p>
+		<?= barreAvancement ($max , $played , $status) ?>
+	</div>
+	<?php $retour = ob_get_clean();
+	return $retour;
+}

@@ -1,4 +1,6 @@
 <?php
+// On récupère l'affichage
 $contenu = getContenu();
 
-require_once('Afficher/Gabarit.php');
+// On incorpore dans le gabarit
+require_once('Afficher/Elements/Gabarit.php');
