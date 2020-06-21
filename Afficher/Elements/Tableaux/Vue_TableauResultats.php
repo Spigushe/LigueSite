@@ -1,14 +1,13 @@
 <?php
 function tableauResultats ($helper) {
 	ob_start(); ?>
-	<div class="table-responsive">
+	<div class="table-responsive  mb-5">
 	<table id="tableMatches" class="table table-hover" aria-describedby="tableMatches">
 		<!--<caption>Résultats des parties</caption>-->
 		<thead>
 			<tr>
 				<th scope="col" class="sorting" aria-controls="tablePlacements"></th>
 			<?php
-			sort($helper['infos']['pseudo']);
 			for ($i = 0; $i < (count($helper['infos']['pseudo'])-1); $i++) {
 				$cle = $helper['infos']['pseudo'][$i];
 				?>

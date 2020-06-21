@@ -219,4 +219,4 @@ foreach (array_keys($helper) as $cle) {
 /******                 ******/
 /*****************************/
 /*****************************/
-sort($helper['infos']['pseudo']);
+natcasesort($helper['infos']['pseudo']);
