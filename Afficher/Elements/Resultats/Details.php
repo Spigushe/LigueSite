@@ -26,6 +26,7 @@ Avoir un tableau global qui reprend toutes les infos d'une ligue et d'une saison
 	|- String d'affichage du résultat
 	|- Win ou Lose
 	|- Infos du vainqueur (pseudo / id_discord / id_deck)
+	|- Tiebreakers
  ******   Fin    ******/
 
 $helper = array(); /** VARIABLE DE STOCKAGE **/
@@ -89,6 +90,19 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		'parties'		=> array(), /* On y stockera les matches */
 		'victoires'		=> 0,
 		'defaites'		=> 0,
+		/*****************************/
+		/* 06_22 UPDATE  TIEBREAKERS */
+		/* Based on Appedix C of MTR */
+		/*****************************/
+		'tiebreakers'	=> array(
+			'matchPoints'			=> 0,
+			'gamePoints'			=> 0,
+			'gamePlayed'			=> 0,
+			'matchWinPercentage'	=> 0,
+			'gameWinPercentage'		=> 0,
+			'o_matchWinPercentage'	=> 0,
+			'o_gameWinPercentage'	=> 0,
+		),
 	);
 }
 
@@ -116,15 +130,20 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		$id2 = $resultat['id_deck2'];
 		// Joueur 1 - Id_Deck
 		$helper[$id1]['parties'][$id2] = array(
+			// Player informations
 			'p_result'	=> $resultat['resultat_deck1'],
 			'p_deck'	=> $resultat['id_deck1'],
+			'p_pseudo'	=> $helper[$resultat['id_deck1']]['pseudo'],
+			// Opponent informations
 			'o_result'	=> $resultat['resultat_deck2'],
 			'o_deck'	=> $resultat['id_deck2'],
 			'o_pseudo'	=> $helper[$resultat['id_deck2']]['pseudo'],
-			'string'	=> $resultat['resultat_deck1'] . " - " . $resultat['resultat_deck2'],
+			// Result informations
 			'result'	=>
 				($resultat['resultat_deck1'] > $resultat['resultat_deck2']) ?
 					'win' : 'lose',
+			'string'	=> $resultat['resultat_deck1'] . " - " . $resultat['resultat_deck2'],
+			// Winning deck informations
 			'w_deck'	=>
 				($resultat['resultat_deck1'] > $resultat['resultat_deck2']) ?
 					$resultat['id_deck1'] : $resultat['id_deck2'],
@@ -143,29 +162,22 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		);
 		// Joueur 2 - Id_Deck
 		$helper[$id2]['parties'][$id1] = array(
-			'p_result'	=> $resultat['resultat_deck2'],
-			'p_deck'	=> $resultat['id_deck2'],
-			'o_result'	=> $resultat['resultat_deck1'],
-			'o_deck'	=> $resultat['id_deck1'],
-			'o_pseudo'	=> $helper[$resultat['id_deck1']]['pseudo'],
+			// Player informations
+			'p_result'	=> $helper[$id1]['parties'][$id2]['o_result'],
+			'p_deck'	=> $helper[$id1]['parties'][$id2]['o_deck'],
+			'p_pseudo'	=> $helper[$id1]['parties'][$id2]['o_pseudo'],
+			// Opponent informations
+			'o_result'	=> $helper[$id1]['parties'][$id2]['p_result'],
+			'o_deck'	=> $helper[$id1]['parties'][$id2]['p_deck'],
+			'o_pseudo'	=> $helper[$id1]['parties'][$id2]['p_pseudo'],
+			// Result informations
+			'result'	=> ($helper[$id1]['parties'][$id2]['result'] == "lose") ? 'win' : 'lose',
 			'string'	=> $resultat['resultat_deck2'] . " - " . $resultat['resultat_deck1'],
-			'result'	=> ($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
-					'win' : 'lose',
-			'w_deck'	=>
-				($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
-					$resultat['id_deck2'] : $resultat['id_deck1'],
-			'w_pseudo'	=>
-				($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
-					$helper[$resultat['id_deck2']]['pseudo'] :
-					$helper[$resultat['id_deck1']]['pseudo'],
-			'w_discord'	=>
-				($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
-					$helper[$resultat['id_deck2']]['id_discord'] :
-					$helper[$resultat['id_deck1']]['id_discord'],
-			'w_general' =>
-				($resultat['resultat_deck2'] > $resultat['resultat_deck1']) ?
-					$helper[$resultat['id_deck2']]['general'] :
-					$helper[$resultat['id_deck1']]['general'],
+			// Winning deck informations
+			'w_deck'	=> $helper[$id1]['parties'][$id2]['w_deck'],
+			'w_pseudo'	=> $helper[$id1]['parties'][$id2]['w_pseudo'],
+			'w_discord'	=> $helper[$id1]['parties'][$id2]['w_discord'],
+			'w_general' => $helper[$id1]['parties'][$id2]['w_general'],
 		);
 		// Répartition des infos
 		// Pseudo
@@ -178,7 +190,8 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		$cle2 = $helper[$id2]['id_discord'];
 		$helper[$id1]['parties'][$cle2] = $helper[$id1]['parties'][$id2];
 		$helper[$id2]['parties'][$cle1] = $helper[$id2]['parties'][$id1];
-		// Enregistrement des infos complémentaires
+
+		// Enregistrement des résultats
 		$helper[$id1]['victoires'] +=
 			($helper[$id1]['parties'][$id2]['result'] == 'win') ? 1 : 0;
 		$helper[$id1]['defaites'] +=
@@ -188,8 +201,52 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		$helper[$id2]['defaites'] +=
 			($helper[$id2]['parties'][$id1]['result'] == 'lose') ? 1 : 0;
 
+		// Calcul des tiebreakers
+		// Joueur 1
+		$helper[$id1]['tiebreakers']['gamePoints'] += 3 * $resultat['resultat_deck1'];
+		$helper[$id1]['tiebreakers']['matchPoints']  +=
+			($resultat['resultat_deck1'] == 2) ? 3 : 0;
+		$helper[$id1]['tiebreakers']['gamePlayed'] += $resultat['resultat_deck1'] + $resultat['resultat_deck2'];
+		// Joueur 2
+		$helper[$id2]['tiebreakers']['gamePoints'] += 3 * $resultat['resultat_deck2'];
+		$helper[$id2]['tiebreakers']['matchPoints']  +=
+			($resultat['resultat_deck2'] == 2) ? 3 : 0;
+		$helper[$id2]['tiebreakers']['gamePlayed'] += $resultat['resultat_deck1'] + $resultat['resultat_deck2'];
+
 		// On comptabilise le match
 		$helper['infos']['joues']  += 1;
+	}
+}
+
+/*****************************/
+/*****************************/
+/******                 ******/
+/******   TIEBREAKERS   ******/
+/******                 ******/
+/*****************************/
+/*****************************/
+for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
+	$id1 = $helper['infos']['decks'][$i];
+	$player1 = &$helper[$id1];
+	// This "&" made me lose around 1 hour to figure out why the $helper didn't
+	// recieve any value after computing everything !
+	
+	// Calcul du matchWinPercentage
+	$player1['tiebreakers']['matchWinPercentage'] =
+		max(0.250 , round($player1['tiebreakers']['matchPoints'] / (3 * ($player1['victoires'] + $player1['defaites'])), 4));
+	// Calcul du gameWinPercentage
+	$player1['tiebreakers']['gameWinPercentage'] =
+		max(0.250 , round ($player1['tiebreakers']['gamePoints'] / (3 * $player1['tiebreakers']['gamePlayed']), 4));
+	// Récupération des infos des adversaires
+	for ($j = 0; $j < count($helper['infos']['decks']); $j++) {
+		$id2 = $helper['infos']['decks'][$j];
+		$player2 = &$helper[$id2];
+		if ($i != $j) {
+			// Calcul du o_matchWinPercentage
+			$player2['tiebreakers']['o_matchWinPercentage'] += round($player1['tiebreakers']['matchWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
+			// Calcul du o_gameWinPercentage
+			$player1['tiebreakers']['o_gameWinPercentage'] += round($player1['tiebreakers']['gameWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
+		}
 	}
 }
 
@@ -201,8 +258,8 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 /*****************************/
 /*****************************/
 foreach (array_keys($helper) as $cle) {
-	// On va copier les infos du tableau
 	if ($cle != 'infos') {
+		// On va copier les infos du tableau
 		// Par pseudo
 		$pseudo = $helper[$cle]['pseudo'];
 		$helper[$pseudo] = $helper[$cle];
