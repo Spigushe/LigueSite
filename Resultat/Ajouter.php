@@ -43,7 +43,7 @@ function nouveauResultat ($informations)
 
 	// Vérification de la saison
 	$joueur1['saison'] = __SAISON__;
-	if (preg_match("/Placement/i",$_GET['ligue'])) {
+	if (preg_match("/Placement/i",$joueur1['ligue'])) {
 		$joueur1['saison'] += 1;
 	}
 	$joueur2['saison'] = $joueur1['saison'];
