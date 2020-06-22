@@ -7,7 +7,11 @@ function progressLigue ($ligue) {
 	$played = $ligue['infos']['joues'];
 	$status = round( $played / $max * 100 , 2);
 	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
-	return barreAvancement ($max , $played , $status);
+	$retour  = "<div class='my-5'></div>";
+	$retour .= barreAvancement ($max , $played , $status);
+	$retour .= "<div class='my-5'></div>";
+
+	return $retour;
 }
 
 
@@ -26,6 +30,7 @@ function afficheGroupe ($groupe,$infos) {
 		</p>
 		<?= barreAvancement ($max , $played , $status) ?>
 	</div>
+	<div class='my-5'></div>
 	<?php $retour = ob_get_clean();
 	return $retour;
 }

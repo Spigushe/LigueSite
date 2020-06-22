@@ -14,5 +14,9 @@ function afficherTableauMetagame ($helper) {
 		}
 	}
 	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
-	return tableauMetagame($lignes);
+	$retour  = "<h3 class='mt-3'>Détail du metagame</h3>";
+	$retour .= tableauMetagame($lignes);
+	$retour .= "<div class='my-5'></div>";
+	
+	return $retour;
 }

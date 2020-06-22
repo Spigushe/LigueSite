@@ -2,7 +2,12 @@
 require_once('Afficher/Elements/Tableaux/Vue_TableauResultats.php');
 
 function AfficherTableauResultats ($helper) {
-	return tableauResultats($helper);
+	$retour  = "<h3 class='mt-3'>Résultat des parties</h3>";
+	$retour .= "<p class='mb-2'><i>You might have to scroll horizontally to access everything</i></p>";
+	$retour .=  tableauResultats($helper);
+	$retour .= "<div class='my-5'></div>";
+
+	return $retour;
 }
 
 function afficheResultat ($helper, $pseudo1, $pseudo2) {
