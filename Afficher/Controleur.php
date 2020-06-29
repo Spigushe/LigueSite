@@ -8,17 +8,17 @@ function getContenu ()
 		if (preg_match("/Placement/", $_GET['ligue']))
 		{
 			// Résumé placements
-			require_once('Afficher/Elements/Placement/Controleur.php');
+			require_once('Afficher/Pages/Placement/Controleur.php');
 		}
 		else if (preg_match("/Playoff/", $_GET['ligue']))
 		{
 			// Résumé playoffs
-			//require_once('Afficher/Elements/Playoffs.php');
+			require_once('Afficher/Pages/Playoff/Controleur.php');
 		}
 		else
 		{
 			// Résumé Ligue
-			require_once('Afficher/Elements/Ligue/Controleur.php');
+			require_once('Afficher/Pages/Ligue/Controleur.php');
 		}
 	}
 	else

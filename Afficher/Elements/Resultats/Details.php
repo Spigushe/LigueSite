@@ -225,18 +225,19 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 /******                 ******/
 /*****************************/
 /*****************************/
+// Calcul des tiebreakers directement liés au joueur
 for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 	$id1 = $helper['infos']['decks'][$i];
 	$player1 = &$helper[$id1];
 	// This "&" made me lose around 1 hour to figure out why the $helper didn't
 	// recieve any value after computing everything !
-	
+
 	// Calcul du matchWinPercentage
 	$player1['tiebreakers']['matchWinPercentage'] =
-		max(0.250 , round($player1['tiebreakers']['matchPoints'] / (3 * ($player1['victoires'] + $player1['defaites'])), 4));
+		max(0.3333 , round($player1['tiebreakers']['matchPoints'] / (3 * max(1, ($player1['victoires'] + $player1['defaites']))), 4));
 	// Calcul du gameWinPercentage
 	$player1['tiebreakers']['gameWinPercentage'] =
-		max(0.250 , round ($player1['tiebreakers']['gamePoints'] / (3 * $player1['tiebreakers']['gamePlayed']), 4));
+		max(0.3333 , round ($player1['tiebreakers']['gamePoints'] / (3 * max(1, $player1['tiebreakers']['gamePlayed'])), 4));
 	// Récupération des infos des adversaires
 	for ($j = 0; $j < count($helper['infos']['decks']); $j++) {
 		$id2 = $helper['infos']['decks'][$j];
@@ -245,7 +246,7 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 			// Calcul du o_matchWinPercentage
 			$player2['tiebreakers']['o_matchWinPercentage'] += round($player1['tiebreakers']['matchWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
 			// Calcul du o_gameWinPercentage
-			$player1['tiebreakers']['o_gameWinPercentage'] += round($player1['tiebreakers']['gameWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
+			$player2['tiebreakers']['o_gameWinPercentage'] += round($player1['tiebreakers']['gameWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
 		}
 	}
 }
@@ -272,8 +273,69 @@ foreach (array_keys($helper) as $cle) {
 /*****************************/
 /*****************************/
 /******                 ******/
+/******    CLASSEMENT   ******/
+/******                 ******/
+/*****************************/
+/*****************************/
+for ($i = 0; $i < count($helper['infos']['pseudo']); $i++) {
+	$cle = $helper['infos']['pseudo'][$i];
+	$helper['infos']['classement'][$cle] = 1;
+}
+
+for ($i = 0; $i < (count($helper['infos']['pseudo'])-1); $i++) {
+	$cle = $helper['infos']['pseudo'][$i];
+	for ($j = $i + 1; $j < count($helper['infos']['pseudo']); $j++) {
+		$opp = $helper['infos']['pseudo'][$j];
+		// Départage aux Points
+		if ($helper[$cle]['tiebreakers']['matchPoints'] > $helper[$opp]['tiebreakers']['matchPoints']) {
+			$helper['infos']['classement'][$opp] ++;
+		} else if ($helper[$cle]['tiebreakers']['matchPoints'] < $helper[$opp]['tiebreakers']['matchPoints']) {
+			$helper['infos']['classement'][$cle] ++;
+		} else if ($helper[$cle]['tiebreakers']['matchPoints'] == $helper[$opp]['tiebreakers']['matchPoints']) {
+			// Game Win %
+			if ($helper[$cle]['tiebreakers']['gameWinPercentage'] > $helper[$opp]['tiebreakers']['gameWinPercentage']) {
+				$helper['infos']['classement'][$opp] ++;
+			} else if ($helper[$cle]['tiebreakers']['gameWinPercentage'] < $helper[$opp]['tiebreakers']['gameWinPercentage']) {
+				$helper['infos']['classement'][$cle] ++;
+			} else if ($helper[$cle]['tiebreakers']['gameWinPercentage'] == $helper[$opp]['tiebreakers']['gameWinPercentage']) {
+			// Opp Game Win %
+				if ($helper[$cle]['tiebreakers']['o_gameWinPercentage'] > $helper[$opp]['tiebreakers']['o_gameWinPercentage']) {
+					$helper['infos']['classement'][$opp] ++;
+				} else if ($helper[$cle]['tiebreakers']['o_gameWinPercentage'] < $helper[$opp]['tiebreakers']['o_gameWinPercentage']) {
+					$helper['infos']['classement'][$cle] ++;
+				} else if ($helper[$cle]['tiebreakers']['o_gameWinPercentage'] == $helper[$opp]['tiebreakers']['o_gameWinPercentage']) {
+					// Match Win %
+					if ($helper[$cle]['tiebreakers']['matchWinPercentage'] > $helper[$opp]['tiebreakers']['matchWinPercentage']) {
+						$helper['infos']['classement'][$opp] ++;
+					} else if ($helper[$cle]['tiebreakers']['matchWinPercentage'] < $helper[$opp]['tiebreakers']['matchWinPercentage']) {
+						$helper['infos']['classement'][$cle] ++;
+					} else if ($helper[$cle]['tiebreakers']['matchWinPercentage'] == $helper[$opp]['tiebreakers']['matchWinPercentage']) {
+						// Opp Match Win %
+						if ($helper[$cle]['tiebreakers']['o_matchWinPercentage'] > $helper[$opp]['tiebreakers']['o_matchWinPercentage']) {
+							$helper['infos']['classement'][$opp] ++;
+						} else if ($helper[$cle]['tiebreakers']['o_matchWinPercentage'] < $helper[$opp]['tiebreakers']['o_matchWinPercentage']) {
+							$helper['infos']['classement'][$cle] ++;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+/*****************************/
+/*****************************/
+/******                 ******/
 /******  TRI PAR PSEUDO ******/
 /******                 ******/
 /*****************************/
 /*****************************/
-natcasesort($helper['infos']['pseudo']);
+for ($i = 0; $i < count($helper['infos']['pseudo']); $i++ ) {
+	for ($j = 0; $j < (count($helper['infos']['pseudo'])-1); $j++ ) {
+		if (strcasecmp($helper['infos']['pseudo'][$j],$helper['infos']['pseudo'][$j+1]) > 0) {
+			$tampon = $helper['infos']['pseudo'][$j];
+			$helper['infos']['pseudo'][$j] = $helper['infos']['pseudo'][$j+1];
+			$helper['infos']['pseudo'][$j+1] = $tampon;
+		}
+	}
+}

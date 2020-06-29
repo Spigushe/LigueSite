@@ -85,6 +85,8 @@ $(document).ready(function() {
 			{'searchable'	: false, 'targets': 1},
 		]
 	});
+
+	$("#tableClassement").DataTable();
 });
 </script>
 </body>

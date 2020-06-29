@@ -52,7 +52,7 @@
 					<!-- Séparateur de liste -->
 					<div class="dropdown-divider"></div>
 					<!-- Séparateur de liste -->
-					<a class="dropdown-item disabled" href="/Saison-1/Ligue-Playoffs">Play-offs</a>
+					<a class="dropdown-item" href="/Saison-2/Ligue-Playoff">Play-offs</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
@@ -71,7 +71,7 @@
 					<!-- Séparateur de liste -->
 					<div class="dropdown-divider"></div>
 					<!-- Séparateur de liste -->
-					<a class="dropdown-item disabled" href="/Saison-1/Ligue-Playoffs">Play-offs</a>
+					<a class="dropdown-item" href="/Saison-1/Ligue-Playoff">Play-offs</a>
 				</div>
 			</li>
 		</ul>
