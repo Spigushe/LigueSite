@@ -16,7 +16,6 @@ require_once('Afficher/Elements/Barres/BarreJoueur.php');
 /******                 ******/
 /*****************************/
 /*****************************/
-require_once('Afficher/Elements/Tableaux/TableauJoueurs.php');
 require_once('Afficher/Elements/Tableaux/TableauResultats.php');
 require_once('Afficher/Elements/Tableaux/TableauMetagame.php');
 require_once('Afficher/Elements/Tableaux/TableauParties.php');

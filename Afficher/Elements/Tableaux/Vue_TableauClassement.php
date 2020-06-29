@@ -5,17 +5,14 @@ function tableauClassement ($helper) {
 	<table id="tableClassement" class="table table-hover" aria-describedby="tableClassement">
 		<thead>
 			<tr>
-				<th scope="col" class="sorting align_middle" aria-controls="tableClassement">Rang</th>
-				<th scope="col" class="align_middle">Joueur.se</th>
-				<th scope="col">
-					Matchs
+				<th scope="col" class="sorting align-middle" aria-controls="tableClassement">Rang</th>
+				<th scope="col" class="align-middle">Joueur.se</th>
+				<th scope="col" class="align-middle col-2">
+					Matchs<br>
 					<i><small>(<span class="text-success">Wins</span>-<span class="text-warning">Losses</span>)</small></i>
 				</th>
-				<th scope="col">Points</th>
-				<th scope="col">Game Win %</th>
-				<th scope="col">Opp Game Win %</th>
-				<th scope="col">Match Win %</th>
-				<th scope="col">Opp Match Win %</th>
+				<th scope="col" class="align-middle">Points</th>
+				<th scope="col" class="align-middle">Diff. Points</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,21 +29,14 @@ function tableauClassement ($helper) {
 				</td>
 				<td>
 					<?= afficherBarreJoueur($helper,$cle) ?>
+					<?= afficheGeneral($helper[$cle]['general']) ?>
+						<small>(<i><?= $helper[$cle]['hash'] ?></i>)</small>
 				</td>
 				<td>
 					<?= $helper[$cle]['tiebreakers']['matchPoints'] ?>
 				</td>
 				<td>
-					<?= $helper[$cle]['tiebreakers']['gameWinPercentage']*100 ?> %
-				</td>
-				<td>
-					<?= $helper[$cle]['tiebreakers']['o_gameWinPercentage']*100 ?> %
-				</td>
-				<td>
-					<?= $helper[$cle]['tiebreakers']['matchWinPercentage']*100 ?> %
-				</td>
-				<td>
-					<?= $helper[$cle]['tiebreakers']['o_matchWinPercentage']*100 ?> %
+					<?= $helper[$cle]['tiebreakers']['diffPoints'] ?>
 				</td>
 			</tr>
 			<?php
