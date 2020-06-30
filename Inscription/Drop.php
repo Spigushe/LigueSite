@@ -1,65 +1,29 @@
 <?php
-/*************************
- * changementDeck        *
- * @param tableau $_POST *
- * @return pseudo_cocka--nom_role--id_role *
- *************************/
-function dropJoueur ($informations) {
+
+function Action ($params)
+{
 	// On vérifie que l'utilisateur est déjà inscrit
-	$controle = dejaInscrit($informations['id']);
-	if ($controle == 'XXX') {
+	if (dejaInscrit($params['id']) == 'XXX') {
 		return "Erreur 000 : Utilisateur non inscrit";
 	}
-	
-	// On récupère le pseudo Cockatrice
-	$pseudo = getPseudo($informations['id']);
-	
-	// On récupère le nom du rôle
-	$role = getRole($informations['id']);
-	
-	// On récupère l'identifiant discord du role
-	$id_role = getIdRole($role);
-	
-	// On met tous ses decks en 'non_joué'
-	decksNonJouesParId($informations['id']);
-	
-	// On marque le joueur comme drop
-	setDropJoueur($informations['id']);
-	
-	return $pseudo . "--" . $role . "--" . $id_role;
-}
 
-function getPseudo ($id_discord) {
-	$sql = "SELECT pseudo FROM participants WHERE id_discord = $id_discord;";
-	return executerRequete($sql)->fetchColumn();
-}
+	// On récupère ses infos
+	$joueur = array(
+		'id'		=> $params['id'],
+		'pseudo'	=> getPseudo($params['id']),
+		'ligue'		=> getLigue($params['id']),
+		'saison'	=> (getLigue($params['id']) == 'Placement') ? __SAISON__ +1 : __SAISON__,
+	)
 
-function getRole ($id_discord) {
-	$sql = "SELECT nom_role FROM participants WHERE id_discord = $id_discord;";
-	return executerRequete($sql)->fetchColumn();
-}
+	// On le retire de la ligue actuelle
+	departJoueur($joueur['id']);
 
-function getIdRole ($role) {
-	$sql = "SELECT id_discord FROM roles WHERE nom_role LIKE '%$role%';";
-	return executerRequete($sql)->fetchColumn();
-}
+	// On l'ajoute à la table des drops
+	dropJoueur($joueur);
 
-function decksNonJouesParId ($id_discord) {
-	$sql =  "UPDATE decks ".//
-			"SET est_joue = 0 ".//
-			"WHERE id_discord = $id_discord;";
-	executerRequete($sql);
-}
+	// On passe ses decks à non-joués
+	decksNonJoues($joueur['id']);
 
-function setDropJoueur ($id_discord) {
-	// Update de la table des participants
-	$sql = 	"UPDATE participants ".//
-			"SET id_discord = 'D$id_discord' ".//
-			"WHERE id_discord = $id_discord;";
-	executerRequete($sql);
-	// Update de la table decks
-	$sql = 	"UPDATE decks ".//
-			"SET id_discord = 'D$id_discord' ".//
-			"WHERE id_discord = $id_discord;";
-	executerRequete($sql);
+	// On fait un retour au bot
+	return $joueur['pseudo'] . "--" . $joueur['ligue'] . "--" . getIdRole($joueur['ligue']);
 }
