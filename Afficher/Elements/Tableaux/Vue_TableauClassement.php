@@ -13,6 +13,7 @@ function tableauClassement ($helper) {
 				</th>
 				<th scope="col" class="align-middle">Points</th>
 				<th scope="col" class="align-middle">Diff. Points</th>
+				<th scope="col" class="align-middle">Tied Part.</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,6 +38,9 @@ function tableauClassement ($helper) {
 				</td>
 				<td>
 					<?= $helper[$cle]['tiebreakers']['diffPoints'] ?>
+				</td>
+				<td>
+					<?= $helper[$cle]['tiebreakers']['tiedParticipants'] ?>
 				</td>
 			</tr>
 			<?php

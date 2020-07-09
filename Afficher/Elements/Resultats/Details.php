@@ -42,7 +42,7 @@ $sql = "SELECT liste_decks FROM ligues
 		WHERE num_saison = :s AND nom_ligue = :l;";
 // On prépare les variables de base
 $helper['infos']['saison'] = $_GET['saison'];
-$helper['infos']['ligue']  = preg_split("/-/",$_GET['ligue'])[0];
+$helper['infos']['ligue']  = ($_GET['saison'] < 3) ? preg_split("/-/",$_GET['ligue'])[0] : $_GET['ligue'];
 // On prépare le tableau de données
 $donnees = array(
 	':l' => $_GET['ligue'],
@@ -95,14 +95,11 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		/* Based on Appedix C of MTR */
 		/*****************************/
 		'tiebreakers'	=> array(
-			'matchPoints'			=> 0,
-			'gamePoints'			=> 0,
-			'gamePlayed'			=> 0,
-			'diffPoints'			=> 0,
-			'matchWinPercentage'	=> 0,
-			'gameWinPercentage'		=> 0,
-			'o_matchWinPercentage'	=> 0,
-			'o_gameWinPercentage'	=> 0,
+			// Tiebreaker
+			//https://kb.challonge.com/en/article/rank-and-tie-break-statistics-1p5f7y4/
+			'matchPoints'			=> 0, // 1er départage
+			'diffPoints'			=> 0, // 2e départage
+			'tiedParticipants'		=> 0, // 3e départage
 		),
 	);
 }
@@ -204,15 +201,9 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 
 		// Calcul des tiebreakers
 		// Joueur 1
-		$helper[$id1]['tiebreakers']['gamePoints'] += 3 * $resultat['resultat_deck1'];
-		$helper[$id1]['tiebreakers']['matchPoints']  +=
-			($resultat['resultat_deck1'] == 2) ? 3 : 0;
-		$helper[$id1]['tiebreakers']['gamePlayed'] += $resultat['resultat_deck1'] + $resultat['resultat_deck2'];
+		$helper[$id1]['tiebreakers']['matchPoints'] += ($resultat['resultat_deck1'] == 2) ? 3 : 0;
 		// Joueur 2
-		$helper[$id2]['tiebreakers']['gamePoints'] += 3 * $resultat['resultat_deck2'];
-		$helper[$id2]['tiebreakers']['matchPoints']  +=
-			($resultat['resultat_deck2'] == 2) ? 3 : 0;
-		$helper[$id2]['tiebreakers']['gamePlayed'] += $resultat['resultat_deck1'] + $resultat['resultat_deck2'];
+		$helper[$id2]['tiebreakers']['matchPoints'] += ($resultat['resultat_deck2'] == 2) ? 3 : 0;
 
 		// On comptabilise le match
 		$helper['infos']['joues']  += 1;
@@ -233,22 +224,11 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 	// This "&" made me lose around 1 hour to figure out why the $helper didn't
 	// recieve any value after computing everything !
 
-	// Calcul du matchWinPercentage
-	$player1['tiebreakers']['matchWinPercentage'] =
-		max(0.3333 , round($player1['tiebreakers']['matchPoints'] / (3 * max(1, ($player1['victoires'] + $player1['defaites']))), 4));
-	// Calcul du gameWinPercentage
-	$player1['tiebreakers']['gameWinPercentage'] =
-		max(0.3333 , round ($player1['tiebreakers']['gamePoints'] / (3 * max(1, $player1['tiebreakers']['gamePlayed'])), 4));
-
 	// Récupération des infos des adversaires
 	for ($j = 0; $j < count($helper['infos']['decks']); $j++) {
 		$id2 = $helper['infos']['decks'][$j];
 		$player2 = &$helper[$id2];
 		if ($i != $j) {
-			// Calcul du o_matchWinPercentage
-			$player2['tiebreakers']['o_matchWinPercentage'] += round($player1['tiebreakers']['matchWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
-			// Calcul du o_gameWinPercentage
-			$player2['tiebreakers']['o_gameWinPercentage'] += round($player1['tiebreakers']['gameWinPercentage'] / (count($helper['infos']['decks']) - 1), 4);
 			// Calcul du différentiel de points
 			$player1['tiebreakers']['diffPoints'] += $helper[$id1]['parties'][$id2]['p_result'] - $helper[$id1]['parties'][$id2]['o_result'];
 		}
@@ -290,11 +270,29 @@ for ($i = 0; $i < (count($helper['infos']['pseudo'])-1); $i++) {
 	$cle = $helper['infos']['pseudo'][$i];
 	for ($j = $i + 1; $j < count($helper['infos']['pseudo']); $j++) {
 		$opp = $helper['infos']['pseudo'][$j];
-		// Différentiel de points de matches
-		if ($helper[$cle]['tiebreakers']['diffPoints'] > $helper[$opp]['tiebreakers']['diffPoints']) {
+		// Différentiel de points de victoire
+		if ($helper[$cle]['tiebreakers']['matchPoints'] > $helper[$opp]['tiebreakers']['matchPoints']) {
 			$helper['infos']['classement'][$opp] ++;
-		} else if ($helper[$cle]['tiebreakers']['diffPoints'] < $helper[$opp]['tiebreakers']['diffPoints']) {
+		} else if ($helper[$cle]['tiebreakers']['matchPoints'] < $helper[$opp]['tiebreakers']['matchPoints']) {
 			$helper['infos']['classement'][$cle] ++;
+		} else if ($helper[$cle]['tiebreakers']['matchPoints'] == $helper[$opp]['tiebreakers']['matchPoints']) {
+			// Différentiel de points de matches
+			if ($helper[$cle]['tiebreakers']['diffPoints'] > $helper[$opp]['tiebreakers']['diffPoints']) {
+				$helper['infos']['classement'][$opp] ++;
+			} else if ($helper[$cle]['tiebreakers']['diffPoints'] < $helper[$opp]['tiebreakers']['diffPoints']) {
+				$helper['infos']['classement'][$cle] ++;
+			} else if ($helper[$cle]['tiebreakers']['diffPoints'] == $helper[$opp]['tiebreakers']['diffPoints']) {
+				// Adversaires liés
+				if (isset($helper[$cle]['parties'][$opp])) {
+					if ($helper[$cle]['parties'][$opp]['result'] == "win") {
+						$helper[$cle]['tiebreakers']['tiedParticipants'] ++;
+						$helper['infos']['classement'][$opp] ++;
+					} else if ($helper[$cle]['parties'][$opp]['result'] == "lose") {
+						$helper[$opp]['tiebreakers']['tiedParticipants'] ++;
+						$helper['infos']['classement'][$cle] ++;
+					}
+				}
+			}
 		}
 	}
 }
