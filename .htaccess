@@ -12,5 +12,12 @@ RewriteEngine on
 # Règles de réécriture d'URL :
 #--------------------------------------------------
 
-# Quand on indique le format :
+## Affichage des matches de ligue
+# Quand on indique uniquement la saison :
+RewriteRule ^Saison-([0-9]+)?/?$ index.php?page=Afficher&saison=$1 [NC,L]
+# Quand on indique la saison et la ligue :
 RewriteRule ^Saison-([0-9]+)?/?Ligue-([a-zA-Z0-9\-]+)?/?$ index.php?page=Afficher&saison=$1&ligue=$2 [NC,L]
+
+## Affichage des informations dérivées
+# Quand on indique un joueur :
+RewriteRule ^Joueur-([a-zA-Z0-9\-]+)?/?$ index.php?page=Afficher&joueur=$1 [NC,L]
