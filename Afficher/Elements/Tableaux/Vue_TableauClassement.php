@@ -11,9 +11,19 @@ function tableauClassement ($helper) {
 					Matchs<br>
 					<i><small>(<span class="text-success">Wins</span>-<span class="text-warning">Losses</span>)</small></i>
 				</th>
-				<th scope="col" class="align-middle">Points</th>
-				<th scope="col" class="align-middle">Diff. Points</th>
-				<th scope="col" class="align-middle">Tied Part.</th>
+				<th scope="col" class="align-middle">
+					Score
+				</th>
+				<th scope="col" class="align-middle">
+					<span href="#" data-toggle="tooltip" title="Game won minus game lost">
+						Diff. Points
+					</span>
+				</th>
+				<th scope="col" class="align-middle">
+					<span href="#" data-toggle="tooltip" title="Game won against tied opponents">
+						Tied Opp.
+					</span>
+				</th>
 			</tr>
 		</thead>
 		<tbody>

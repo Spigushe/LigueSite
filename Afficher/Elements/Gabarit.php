@@ -56,6 +56,14 @@
 <!-- API TappedOut -->
 <!-- https://tappedout.github.io/ --><script src="http://tappedout.net/tappedout.js"></script>
 
+<!-- ToolTip -->
+<script src="popper.min.js"></script>
+<script>
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+</script>
+
 <!-- DataTables dependancies -->
 <link rel="stylesheet" href="Afficher/Addons/datatables.bootstrap4.css">
 <script src="Afficher/Addons/jquery.datatables.js"></script>
