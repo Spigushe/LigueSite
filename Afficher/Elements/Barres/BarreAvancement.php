@@ -20,11 +20,12 @@ function afficheGroupe ($groupe,$infos) {
 	$max    = $infos['maxMatches'];
 	$played = $infos['matches'];
 	$status = $infos['avancement'];
+	$saison = (!isset($_GET['saison']) || ($_GET['saison'] == "")) ? __SAISON__ : $_GET['saison'];
 	// L'élément avec affichage décalé grace à ob_start et ob_get_clean
 	ob_start(); ?>
 	<div>
 		<p class='h3 text-decoration-none'>
-			<a href="/Saison-<?= $_GET['saison'] ?>/Ligue-<?= $groupe ?>" class="text-reset">
+			<a href="/Saison-<?= $saison ?>/Ligue-<?= $groupe ?>" class="text-reset">
 				Groupe <?= $groupe ?>
 			</a>
 		</p>

@@ -24,7 +24,7 @@ function getContenu ()
 	else
 	{
 		// Page d'accueil
-		require_once('Afficher/Elements/Saison.php');
+		require_once('Afficher/Pages/Saison/Controleur.php');
 	}
 	return Affichage($helper);
 }
