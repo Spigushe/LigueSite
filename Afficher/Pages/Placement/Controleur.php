@@ -17,5 +17,5 @@ if (preg_match("/[0-9]/",$_GET['ligue'])) {
 	require_once("Afficher/Elements/Resultats/Placement.php");
 
 	// Vue
-	require_once("Afficher/Elements/Vue/Vue_Placement.php");
+	require_once("Afficher/Elements/Vue/Vue_Global.php");
 }
