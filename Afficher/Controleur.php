@@ -2,6 +2,7 @@
 
 function getContenu ()
 {
+	// Affichage d'une ligue
 	if (isset($_GET['saison']) && isset($_GET['ligue']))
 	{
 		// Affichage
@@ -21,6 +22,14 @@ function getContenu ()
 			require_once('Afficher/Pages/Ligue/Controleur.php');
 		}
 	}
+
+	// Affichage d'un joueur
+	else if (isset($_GET['joueur']))
+	{
+		require_once("Afficher/Pages/Joueur/Controleur.php");
+	}
+
+	// Affichage d'une saison
 	else
 	{
 		// Page d'accueil

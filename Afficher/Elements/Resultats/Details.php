@@ -202,36 +202,13 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		// Calcul des tiebreakers
 		// Joueur 1
 		$helper[$id1]['tiebreakers']['matchPoints'] += ($resultat['resultat_deck1'] == 2) ? 3 : 0;
+		$helper[$id1]['tiebreakers']['diffPoints']  += $resultat['resultat_deck1'] - $resultat['resultat_deck2'];
 		// Joueur 2
 		$helper[$id2]['tiebreakers']['matchPoints'] += ($resultat['resultat_deck2'] == 2) ? 3 : 0;
+		$helper[$id2]['tiebreakers']['diffPoints']  += $resultat['resultat_deck2'] - $resultat['resultat_deck1'];
 
 		// On comptabilise le match
 		$helper['infos']['joues']  += 1;
-	}
-}
-
-/*****************************/
-/*****************************/
-/******                 ******/
-/******   TIEBREAKERS   ******/
-/******                 ******/
-/*****************************/
-/*****************************/
-// Calcul des tiebreakers directement liés au joueur
-for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
-	$id1 = $helper['infos']['decks'][$i];
-	$player1 = &$helper[$id1];
-	// This "&" made me lose around 1 hour to figure out why the $helper didn't
-	// recieve any value after computing everything !
-
-	// Récupération des infos des adversaires
-	for ($j = 0; $j < count($helper['infos']['decks']); $j++) {
-		$id2 = $helper['infos']['decks'][$j];
-		$player2 = &$helper[$id2];
-		if ($i != $j) {
-			// Calcul du différentiel de points
-			$player1['tiebreakers']['diffPoints'] += $helper[$id1]['parties'][$id2]['p_result'] - $helper[$id1]['parties'][$id2]['o_result'];
-		}
 	}
 }
 
