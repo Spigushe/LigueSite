@@ -11,3 +11,4 @@ function Action ($params)
 	$ligue = getLigue($params['id']);
 
 	return "$pseudo--$ligue";
+}
