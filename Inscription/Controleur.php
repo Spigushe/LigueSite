@@ -13,5 +13,5 @@ if (isset($parametres['action']) && ($parametres['action'] != "")) {
 			require_once("Inscription/Pause.php");
 			break;
 	}
-	Action($parametres);
+	echo Action($parametres);
 }
