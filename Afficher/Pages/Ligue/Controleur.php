@@ -1,10 +1,8 @@
 <?php
 // Fonctions annexes
 require_once('Afficher/Elements/Modele.php');
+
+// Affichage de la Ligue
 require_once('Afficher/Pages/Ligue/Modele.php');
-
-// Helper
-require_once("Afficher/Elements/Resultats/Details.php");
-
-// Affichage
-require_once("Afficher/Elements/Vue/Vue_Poule.php");
+require_once('Afficher/Pages/Ligue/Helper.php');
+require_once('Afficher/Pages/Ligue/Vue_Ligue.php');
