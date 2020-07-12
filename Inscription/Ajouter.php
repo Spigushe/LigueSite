@@ -1,23 +1,27 @@
 <?php
 
-function Action ($params)
-{
+function Action ($params) {
 	// Premier contrôle
-	if (!isset($params['id']) || ($params['id'] == ""))
-	{
+	if (!isset($params['id']) || ($params['id'] == "")) {
 		// données manquantes
 		return $_SESSION['dicoErreurs']['001'];
 	}
 
 	// Est-ce que l'ID_DISCORD est déjà dans la base
-	if (dejaInscrit($params['id']) != 'XXX') // e101 si déjà inscrit
-	{
-		// L'utilisateur est déjà dans la base
-		if (getLigue($params['id']) != 'e107') // e107 si pas de ligue
-		{
-			// Utilisateur déjà inscrit et avec une ligue
+	if (dejaInscrit($params['id']) != 'XXX') {
+		// renvoie 'e101' si déjà inscrit
+
+		/*******  Utilisateur déjà dans la base  *******/
+		if (getLigue($params['id']) != 'e107') {
+			// renvoie 'e107' si pas de ligue
+
+			/*******  Utilisateur déjà dans la base  *******/
+			/******* Utilisateur affecté à une ligue *******/
 			return $_SESSION['dicoErreurs']['e101'];
 		}
+
+		/*******  Utilisateur déjà dans la base  *******/
+		/******* Utilisateur pas affecté à ligue *******/
 
 		// On remet le joueur en Placement
 		return retourJoueur($params['id']);
