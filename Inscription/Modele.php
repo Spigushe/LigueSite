@@ -123,7 +123,7 @@ function dropJoueur ($joueur)
 		':id'		=> $joueur['id'],
 		':ligue'	=> $joueur['ligue'],
 		':saison'	=> $joueur['saison'],
-	)
+	);
 	executerRequete($sql,$data);
 	return "OK";
 }
