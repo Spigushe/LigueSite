@@ -24,7 +24,7 @@ $donnees = array(':pseudo'=>$_GET['joueur']);
 // On exécute la requête
 $requete = executerRequete($sql,$donnees)->fetch();
 // Traitement du résultat
-$helper['infos']['pseudo'] = ""; /* INFORMATIONS NON RECUPEREE ACTUELLEMENT */
+$helper['infos']['pseudo_discord'] = ""; /* INFORMATIONS NON RECUPEREE ACTUELLEMENT */
 $helper['infos']['id_discord'] = $requete['id_discord'];
 
 /*****************************/
