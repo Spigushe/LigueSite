@@ -61,7 +61,7 @@
 				Saison 1
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item disabled" href="/Saison-1/Ligue-Placement">Placements</a>
+					<a class="dropdown-item" href="/Saison-1/Ligue-Placement">Placements</a>
 					<!-- Séparateur de liste -->
 					<div class="dropdown-divider"></div>
 					<!-- Séparateur de liste -->
