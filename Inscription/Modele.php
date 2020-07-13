@@ -51,6 +51,23 @@ function getRole ($id_discord)
 	return executerRequete($sql,array(':id'=>$id_discord))->fetchColumn();
 }
 
+function getJoueursRole ($role)
+{
+	$sql = "SELECT * FROM participants p
+			JOIN decks d ON p.id_discord = d.id_discord
+			WHERE p.nom_role = :r AND est_joue = 1;";
+	$donnees = array(':r'=>$role);
+	$requete = executerRequete($sql,$donnees);
+
+	$retour = array();
+	while ($resultat = $requete->fetch())
+	{
+		$retour[] = $resultat;
+	}
+
+	return $retour;
+}
+
 /*****************************/
 /*****************************/
 /******                 ******/
@@ -104,6 +121,14 @@ function getIdRole ($nom)
 {
 	$sql = "SELECT id_discord FROM roles WHERE nom_role = :nom ORDER BY id_discord DESC;";
 	return executerRequete($sql,array(':nom'=>$nom))->fetchColumn();
+}
+
+function roleExiste ($nom) {
+	$sql = "SELECT COUNT(*) FROM roles WHERE nom_role LIKE '%$nom%';";
+	$requete = executerRequete($sql);
+	// On va regarder le résultat
+	if ($requete->fetchColumn() > 0) { return 'XXX'; }
+	return 'e108';
 }
 
 /*****************************/

@@ -12,6 +12,9 @@ if (isset($parametres['action']) && ($parametres['action'] != "")) {
 		case 'Pause':
 			require_once("Inscription/Pause.php");
 			break;
+		case 'Liste':
+			require_once("Inscription/Ligue.php");
+			break;
 	}
 	echo Action($parametres);
 }
