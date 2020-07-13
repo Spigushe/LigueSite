@@ -10,5 +10,6 @@ function Action ($params)
 	$pseudo = getPseudo($params['id']);
 	$ligue = getLigue($params['id']);
 
-	return "$pseudo--$ligue";
+	// On vérifie que l'utilisateur fait partie d'une ligue
+	return (isset($_SESSION['dicoErreurs'][$ligue])) ? $_SESSION['dicoErreurs'][$ligue] : "$pseudo--$ligue";
 }
