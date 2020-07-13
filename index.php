@@ -12,4 +12,4 @@ define('__MAX_MATCHES__',1);
 $parametres = array_merge($_GET,$_POST);
 
 /* ROUTAGE DE LA REQUETE */
-require_once('Controleur.php');
+require_once 'Controleur.php';

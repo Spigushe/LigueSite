@@ -4,7 +4,7 @@
 if (isset($parametres['action']) && ($parametres['action'] != "")) {
 	switch ($parametres['action']) {
 		case 'Ajouter':
-			require_once($parametres['page']."/".$parametres['action'].".php");
+			require_once $parametres['page']."/".$parametres['action'].".php";
 			echo nouveauResultat($parametres);
 			break;
 		default:

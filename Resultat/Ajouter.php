@@ -1,5 +1,4 @@
 <?php
-require_once('Modele.php');
 
 function nouveauResultat ($informations)
 {

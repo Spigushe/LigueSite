@@ -1,5 +1,5 @@
 <?php
-require_once("Afficher/Elements/Barres/Vue_BarreJoueur.php");
+require_once "Afficher/Elements/Barres/Vue_BarreJoueur.php";
 
 function afficherBarreJoueur ($helper, $pseudo) {
 	// Taille des morceaux de la barre

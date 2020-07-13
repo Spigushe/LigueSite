@@ -4,16 +4,16 @@
 if (isset($parametres['action']) && ($parametres['action'] != "")) {
 	switch ($parametres['action']) {
 		case 'Ajouter':
-			require_once("Inscription/Ajouter.php");
+			require_once "Inscription/Ajouter.php";
 			break;
 		case 'Drop':
-			require_once("Inscription/Drop.php");
+			require_once "Inscription/Drop.php";
 			break;
 		case 'Pause':
-			require_once("Inscription/Pause.php");
+			require_once "Inscription/Pause.php";
 			break;
 		case 'Liste':
-			require_once("Inscription/Liste.php");
+			require_once "Inscription/Liste.php";
 			break;
 	}
 	echo Action($parametres);

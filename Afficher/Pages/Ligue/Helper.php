@@ -1,2 +1,2 @@
 <?php
-require_once("Afficher/Elements/Helpers/Details.php");
+require_once "Afficher/Elements/Helpers/Details.php";

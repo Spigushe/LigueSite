@@ -1,5 +1,5 @@
 <?php
-require_once("Afficher/Elements/Tableaux/Vue_TableauMetagame.php");
+require_once "Afficher/Elements/Tableaux/Vue_TableauMetagame.php";
 
 function afficherTableauMetagame ($helper) {
 	// Transposition du helper
@@ -17,6 +17,6 @@ function afficherTableauMetagame ($helper) {
 	$retour  = "<h3 class='mt-3'>Détail du metagame</h3>";
 	$retour .= tableauMetagame($lignes);
 	$retour .= "<div class='my-5'></div>";
-	
+
 	return $retour;
 }

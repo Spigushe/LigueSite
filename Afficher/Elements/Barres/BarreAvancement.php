@@ -1,5 +1,5 @@
 <?php
-require_once("Afficher/Elements/Barres/Vue_BarreAvancement.php");
+require_once "Afficher/Elements/Barres/Vue_BarreAvancement.php";
 
 function progressLigue ($ligue) {
 	// Définition des variables

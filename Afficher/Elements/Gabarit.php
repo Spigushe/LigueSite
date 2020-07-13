@@ -22,7 +22,7 @@
 		Commander League
 	</h1>
 
-	<?php require_once('Afficher/Elements/Menu.php'); ?>
+	<?php require_once 'Afficher/Elements/Menu.php'; ?>
 
 	<?php if (isset($_GET['saison']) && isset($_GET['ligue'])) : ?>
 		<div class="display-4 mb-5">Saison <?= $_GET['saison'] ?> - Ligue <?= ucfirst($_GET['ligue']) ?></div>

@@ -1,6 +1,6 @@
 <?php
-require_once("BD/dicoTables.php");
-require_once("BD/dicoErreurs.php");
+require_once "BD/dicoTables.php";
+require_once "BD/dicoErreurs.php";
 
 function getBdd() {
 	// Création de la connexion

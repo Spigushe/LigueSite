@@ -1,5 +1,5 @@
 <?php
-require_once("Afficher/Elements/Tableaux/Vue_TableauClassement.php");
+require_once "Afficher/Elements/Tableaux/Vue_TableauClassement.php";
 
 function afficherTableauClassement ($helper) {
 	$retour  = "<h3 class='mt-3'>Classement au sein de la poule</h3>";

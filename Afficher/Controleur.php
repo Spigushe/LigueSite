@@ -9,33 +9,33 @@ function getContenu ()
 		if (preg_match("/Placement/", $_GET['ligue']))
 		{
 			// Résumé placements
-			require_once('Afficher/Pages/Placement/Controleur.php');
+			require_once 'Afficher/Pages/Placement/Controleur.php';
 		}
 		else if (preg_match("/Playoff/", $_GET['ligue']))
 		{
 			// Résumé playoffs
-			require_once('Afficher/Pages/Playoff/Controleur.php');
+			require_once 'Afficher/Pages/Playoff/Controleur.php';
 		}
 		else
 		{
 			// Résumé Ligue
-			require_once('Afficher/Pages/Ligue/Controleur.php');
+			require_once 'Afficher/Pages/Ligue/Controleur.php';
 		}
 	}
 
 	// Affichage d'un joueur
 	else if (isset($_GET['joueur']))
 	{
-		require_once("Afficher/Pages/Joueur/Controleur.php");
+		require_once "Afficher/Pages/Joueur/Controleur.php";
 	}
 
 	// Affichage d'une saison
 	else
 	{
 		// Page d'accueil
-		require_once('Afficher/Pages/Saison/Controleur.php');
+		require_once 'Afficher/Pages/Saison/Controleur.php';
 	}
 	return Affichage($helper);
 }
 
-require_once('Afficher/Vue.php');
+require_once 'Afficher/Vue.php';

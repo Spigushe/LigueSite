@@ -1,5 +1,5 @@
 <?php
-require_once('Afficher/Elements/Tableaux/Vue_TableauResultats.php');
+require_once 'Afficher/Elements/Tableaux/Vue_TableauResultats.php';
 
 function AfficherTableauResultats ($helper) {
 	$retour  = "<h3 class='mt-3'>Résultat des parties</h3>";

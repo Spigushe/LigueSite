@@ -6,8 +6,8 @@
 /******                 ******/
 /*****************************/
 /*****************************/
-require_once('Afficher/Elements/Barres/BarreAvancement.php');
-require_once('Afficher/Elements/Barres/BarreJoueur.php');
+require_once 'Afficher/Elements/Barres/BarreAvancement.php';
+require_once 'Afficher/Elements/Barres/BarreJoueur.php';
 
 /*****************************/
 /*****************************/
@@ -16,10 +16,10 @@ require_once('Afficher/Elements/Barres/BarreJoueur.php');
 /******                 ******/
 /*****************************/
 /*****************************/
-require_once('Afficher/Elements/Tableaux/TableauResultats.php');
-require_once('Afficher/Elements/Tableaux/TableauMetagame.php');
-require_once('Afficher/Elements/Tableaux/TableauParties.php');
-require_once('Afficher/Elements/Tableaux/TableauClassement.php');
+require_once 'Afficher/Elements/Tableaux/TableauResultats.php';
+require_once 'Afficher/Elements/Tableaux/TableauMetagame.php';
+require_once 'Afficher/Elements/Tableaux/TableauParties.php';
+require_once 'Afficher/Elements/Tableaux/TableauClassement.php';
 
 /*****************************/
 /*****************************/

@@ -3,4 +3,4 @@
 $contenu = getContenu();
 
 // On incorpore dans le gabarit
-require_once('Afficher/Elements/Gabarit.php');
+require_once 'Afficher/Elements/Gabarit.php';
