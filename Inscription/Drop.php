@@ -7,13 +7,17 @@ function Action ($params)
 		return "Erreur 000 : Utilisateur non inscrit";
 	}
 
-	// On récupère ses infos
+	// infos sur le joueur
 	$joueur = array(
 		'id'		=> $params['id'],
 		'pseudo'	=> getPseudo($params['id']),
 		'ligue'		=> getLigue($params['id']),
 		'saison'	=> (getLigue($params['id']) == 'Placement') ? __SAISON__ +1 : __SAISON__,
+		'deck'		=> getDeck($params['id'])['id_deck'],
 	);
+
+	// On bascule tous les résultats restants à 0-2
+	endLigue($joueur);
 
 	// On le retire de la ligue actuelle
 	departJoueur($joueur['id']);
