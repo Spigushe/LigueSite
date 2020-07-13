@@ -87,7 +87,7 @@ function departJoueur ($id)
 {
 	$sql = "UPDATE participants SET nom_role = '' WHERE id_discord = :id;";
 	executerRequete($sql,array(':id'=>$id));
-	return ajoutDrop();
+	return false;
 }
 
 /*****************************/

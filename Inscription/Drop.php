@@ -13,7 +13,7 @@ function Action ($params)
 		'pseudo'	=> getPseudo($params['id']),
 		'ligue'		=> getLigue($params['id']),
 		'saison'	=> (getLigue($params['id']) == 'Placement') ? __SAISON__ +1 : __SAISON__,
-	)
+	);
 
 	// On le retire de la ligue actuelle
 	departJoueur($joueur['id']);
