@@ -13,7 +13,7 @@ function Action ($params)
 	$retour = "";
 	for ($i = 0; $i < count($liste); $i++) {
 		if ($retour != "") $retour .= " ";
-		$retour .= $liste[$i]['pseudo'] . "(" . $liste[$i]['hash'] . ")\n";
+		$retour .= "\n" . $liste[$i]['pseudo'] . "(" . $liste[$i]['hash'] . ")";
 	}
 
 	return $retour;
