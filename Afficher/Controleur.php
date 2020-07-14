@@ -5,13 +5,15 @@ function getContenu ()
 	// Affichage d'une ligue
 	if (isset($_GET['saison']) && isset($_GET['ligue']))
 	{
+		$ligue = stripslashes($_GET['ligue']);
+
 		// Affichage
-		if (preg_match("/Placement/", $_GET['ligue']))
+		if (preg_match("/Placement/", $ligue))
 		{
 			// Résumé placements
 			require_once 'Afficher/Pages/Placement/Controleur.php';
 		}
-		else if (preg_match("/Playoff/", $_GET['ligue']))
+		else if (preg_match("/Playoff/", $ligue))
 		{
 			// Résumé playoffs
 			require_once 'Afficher/Pages/Playoff/Controleur.php';
