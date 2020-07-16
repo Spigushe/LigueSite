@@ -62,7 +62,7 @@ function afficheGeneralMetagame ($texte) {
 /******                 ******/
 /*****************************/
 /*****************************/
-function afficheGeneralInline ($texte) {
+function afficheGeneral ($texte) {
 	// De quoi est composée la command zone ?
 	$contraintes = "";
 	if (preg_match('/\//i',$texte)) $contraintes .= "P";
