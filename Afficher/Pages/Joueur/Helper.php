@@ -7,9 +7,17 @@ Avoir un tableau global qui reprend toutes les infos d'un joueur
 /******   Fin    ******/
 
 $helper = array(); /** VARIABLE DE STOCKAGE **/
-$helper['infos'] = array();
-$helper['infos']['decks'] = array();
-$helper['infos']['ligues'] = array();
+$helper['infos'] = array(
+	'pseudo'	=> stripslashes($_GET['joueur']),
+	'decks'		=> array(),
+	'generaux'	=> array(),
+	'ligues'	=> array(),
+	'saisons'	=> array(),
+	'victoires'	=> 0,
+	'defaites'	=> 0,
+	'matchWins'	=> 0,
+	'matchLoss'	=> 0,
+);
 
 /*****************************/
 /*****************************/
@@ -18,9 +26,9 @@ $helper['infos']['ligues'] = array();
 /******                 ******/
 /*****************************/
 /*****************************/
-$sql = "SELECT * FROM participants WHERE pseudo = :pseudo;";
+$sql = "SELECT * FROM participants WHERE pseudo LIKE :pseudo;";
 // On prépare le tableau de données
-$donnees = array(':pseudo'=>$_GET['joueur']);
+$donnees = array(':pseudo'=>$helper['infos']['pseudo']);
 // On exécute la requête
 $requete = executerRequete($sql,$donnees)->fetch();
 // Traitement du résultat
@@ -78,11 +86,17 @@ while ($resultat = $requete->fetch()) {
 	// infos du deck
 	$helper['deck'][$resultat['id_deck']] = array(
 		'ligue'		=> array(),
+		'saison'	=> array(),
 		'victoires'	=> 0,
 		'defaites'	=> 0,
-		'liste'		=> json_decode($resultat['liste']),
+		'liste'		=> json_decode($resultat['liste'], TRUE),
 		'general'	=> $resultat['general'],
 	);
+
+	// infos sur les généraux
+	if (!in_array($resultat['general'], $helper['infos']['generaux'])) {
+		$helper['infos']['generaux'][] = $resultat['general'];
+	}
 
 	// Ligue jouée par le joueur
 	for ($i = 0; $i < count($_decks[$resultat['id_deck']]); $i++) {
@@ -90,8 +104,12 @@ while ($resultat = $requete->fetch()) {
 			// Ne pas afficher les playoffs dans les ligues jouées
 			continue;
 		}
-		$helper['infos']['ligues'][] = $_decks[$resultat['id_deck']][$i]['ligue'] . " S" . $_decks[$resultat['id_deck']][$i]['saison'];
-		$helper['deck'][$resultat['id_deck']]['ligue'][] = $_decks[$resultat['id_deck']][$i]['ligue'] . " S" . $_decks[$resultat['id_deck']][$i]['saison'];
+		// Renseignement des ligues
+		$helper['infos']['ligues'][] = $_decks[$resultat['id_deck']][$i]['ligue'];
+		$helper['deck'][$resultat['id_deck']]['ligue'][] = $_decks[$resultat['id_deck']][$i]['ligue'];
+		// Renseignement des saisons
+		$helper['infos']['saisons'][$_decks[$resultat['id_deck']][$i]['saison']][] = $resultat['id_deck'];
+		$helper['deck'][$resultat['id_deck']]['saison'][] = $_decks[$resultat['id_deck']][$i]['saison'];
 	}
 }
 
@@ -118,5 +136,10 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		// Comtpage
 		$helper['deck'][$id]['victoires'] += ($p_score > $o_score) ? 1 : 0;
 		$helper['deck'][$id]['defaites']  += ($p_score > $o_score) ? 0 : 1;
+		// Infos générales
+		$helper['infos']['victoires'] += $p_score;
+		$helper['infos']['defaites']  += $o_score;
+		$helper['infos']['matchWins']  += ($p_score > $o_score) ? 1 : 0;
+		$helper['infos']['matchLoss']  += ($p_score > $o_score) ? 0 : 1;
 	}
 }
