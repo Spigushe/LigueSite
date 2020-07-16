@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark my-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark my-3 mb-5">
 	<!-- Logo -->
 	<a class="navbar-brand" href="#">
 		<!--
