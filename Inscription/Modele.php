@@ -4,29 +4,22 @@
 function endLigue ($joueur)
 {
 	// Infos sur le joueur et la ligue
-	$matchesJoues = array_merge(adversairesRencontres($joueur),array($joueur['deck']));
 	$listeAdversaire = preg_split("/, /i",getInfoLigue($joueur)['liste_decks']);
 
-	// Matches restants
-	$matchesRestants = getMatchesRestants($matchesJoues, $listeAdversaire);
-
-	// Faire perdre les matches restants
-	loseMatches($joueur,$matchesRestants);
+	// Faire perdre les matches	
+	for ($i = 0; $i < count($listeAdversaire); $i++)
+	{
+		if (matchJoue($joueur['deck'],$listeAdversaire[$i]) > 0)
+		{
+			modifierResultat(matchJoue($joueur['deck'],$listeAdversaire[$i]),$joueur['deck'],$listeAdversaire[$i]);
+		}
+		else
+		{
+			ajouterResultat($joueur,$listeAdversaire[$i]);
+		}
+	}
 
 	return false;
-}
-
-function getMatchesRestants ($joues, $total)
-{
-	$restants = array();
-	for ($i = 0; $i < count($total); $i++) {
-		if (in_array($total[$i], $joues))
-		{
-			continue;
-		}
-		$restants[] = $total[$i];
-	}
-	return $restants;
 }
 
 /*****************************/
@@ -224,22 +217,18 @@ function decksNonJoues ($id_discord)
 /******                 ******/
 /*****************************/
 /*****************************/
-function adversairesRencontres ($joueur)
+function matchJoue ($id1, $id2)
 {
-	$sql = "SELECT * FROM resultats WHERE (id_deck1 = :id OR id_deck2 = :id) AND saison = :s AND ligue = :l;";
+	$sql = "SELECT id_resultat FROM resultats WHERE ((id_deck1 = :id1 AND id_deck2 = :id2) OR (id_deck2 = :id1 AND id_deck1 = :id2)) AND saison = :s AND ligue = :l;";
+	
 	$donnees = array(
-		':id' => $joueur['deck'],
-		':s'  => $joueur['saison'],
-		':l'  => $joueur['ligue'],
+		':id1'	=> $id1,
+		':id2'	=> $id2,
+		':s'	=> $joueur['saison'],
+		':l'	=> $joueur['ligue'],
 	);
-	$requete = executerRequete($sql,$donnees);
 
-	$opponents = array();
-	while ($resultat = $requete->fetch())
-	{
-		$opponents[] = ($resultat['id_deck1'] == $joueur['deck']) ? $resultat['id_deck2'] : $resultat['id_deck1'];
-	}
-	return $opponents;
+	return max(0,executerRequete($sql,$donnees)->fetch()['id_resultat']);
 }
 
 /*****************************/
@@ -252,21 +241,31 @@ function adversairesRencontres ($joueur)
 /******                 ******/
 /*****************************/
 /*****************************/
-function loseMatches ($joueur, $matches)
+function ajouterResultat ($joueur,$autreDeck)
 {
 	$sql = "INSERT INTO resultats (id_deck1,id_deck2,resultat_deck1,resultat_deck2,saison,ligue) VALUES (:id1,:id2,0,2,:s,:l);";
 	$donnees = array(
 		':id1'	=> $joueur['deck'],
+		':id2'	=> $autreDeck,
 		':s'	=> $joueur['saison'],
 		':l'	=> $joueur['ligue'],
 	);
+	executerRequete($sql, $donnees);
+	return false;
+}
 
-	for ($i = 0; $i < count($matches); $i++)
-	{
-		$donnees[':id2'] = $matches[$i];
-		executerRequete($sql, $donnees);
-	}
-
+function modifierResultat ($id_resultat, $deckDefaite, $autreDeck)
+{
+	$sql = "UPDATE resultats SET id_deck1 = :id1 AND id_deck2 = :id2 AND resultat_deck1 = 0 AND resultat_deck2 = 2 WHERE id_resultat = :idr;";
+	
+	$donnees = array(
+		':idr'	=> $id_resultat,
+		':id1'	=> $deckDefaite,
+		':id2'	=> $autreDeck,
+	);
+	
+	executerRequete($sql,$donnees);
+	
 	return false;
 }
 
