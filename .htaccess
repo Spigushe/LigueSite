@@ -17,6 +17,7 @@ RewriteEngine on
 RewriteRule ^Saison-([0-9]+)?/?$ index.php?page=Afficher&saison=$1 [NC,L]
 # Quand on indique la saison et la ligue :
 RewriteRule ^Saison-([0-9]+)?/?Ligue-([a-zA-Z0-9\-]+)?/?$ index.php?page=Afficher&saison=$1&ligue=$2 [NC,L]
+RewriteRule ^Saison-([0-9]+)?/?([a-zA-Z0-9\-]+)?/?$ index.php?page=Afficher&saison=$1&ligue=$2 [NC,L]
 
 ## Affichage des informations dérivées
 # Quand on indique un joueur :
