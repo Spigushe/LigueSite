@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-3">
 	<!-- Logo -->
-	<!-- <a class="navbar-brand" href="https://discord.gg/vbTyu9A" target="_blank"> -->
 	<a href="https://discord.gg/vbTyu9A" target="_blank">
 		<img src="https://discord.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg" height="45" alt="">
 	</a>
