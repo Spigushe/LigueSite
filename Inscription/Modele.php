@@ -4,29 +4,23 @@
 function endLigue ($joueur)
 {
 	// Infos sur le joueur et la ligue
-	$matchesJoues = array_merge(adversairesRencontres($joueur),array($joueur['deck']));
 	$listeAdversaire = preg_split("/, /i",getInfoLigue($joueur)['liste_decks']);
 
-	// Matches restants
-	$matchesRestants = getMatchesRestants($matchesJoues, $listeAdversaire);
-
-	// Faire perdre les matches restants
-	loseMatches($joueur,$matchesRestants);
-
-	return false;
-}
-
-function getMatchesRestants ($joues, $total)
-{
-	$restants = array();
-	for ($i = 0; $i < count($total); $i++) {
-		if (in_array($total[$i], $joues))
+	for ($i = 0; $i < count($listeAdversaire); $i++)
+	{
+		if ($listeAdversaire[$i] == $joueur['deck'])
 		{
 			continue;
 		}
-		$restants[] = $total[$i];
+
+		// On supprime tous les matches déjà joués
+		supprimerMatch($joueur,$listeAdversaire[$i]);
+
+		// On fait perdre tous les matches
+		ajouterResultat($joueur,$listeAdversaire[$i]);
 	}
-	return $restants;
+
+	return false;
 }
 
 /*****************************/
@@ -165,28 +159,6 @@ function roleExiste ($nom) {
 /*****************************/
 /******                 ******/
 /******      TABLE      ******/
-/******      DROPS      ******/
-/******                 ******/
-/******     SETTERS     ******/
-/******                 ******/
-/*****************************/
-/*****************************/
-function dropJoueur ($joueur)
-{
-	$sql = "INSERT INTO drops (id_discord,ligue,saison) VALUES (:id, :ligue, :saison);";
-	$data = array(
-		':id'		=> $joueur['id'],
-		':ligue'	=> $joueur['ligue'],
-		':saison'	=> $joueur['saison'],
-	);
-	executerRequete($sql,$data);
-	return "OK";
-}
-
-/*****************************/
-/*****************************/
-/******                 ******/
-/******      TABLE      ******/
 /******      DECKS      ******/
 /******                 ******/
 /******     GETTERS     ******/
@@ -224,23 +196,7 @@ function decksNonJoues ($id_discord)
 /******                 ******/
 /*****************************/
 /*****************************/
-function adversairesRencontres ($joueur)
-{
-	$sql = "SELECT * FROM resultats WHERE (id_deck1 = :id OR id_deck2 = :id) AND saison = :s AND ligue = :l;";
-	$donnees = array(
-		':id' => $joueur['deck'],
-		':s'  => $joueur['saison'],
-		':l'  => $joueur['ligue'],
-	);
-	$requete = executerRequete($sql,$donnees);
 
-	$opponents = array();
-	while ($resultat = $requete->fetch())
-	{
-		$opponents[] = ($resultat['id_deck1'] == $joueur['deck']) ? $resultat['id_deck2'] : $resultat['id_deck1'];
-	}
-	return $opponents;
-}
 
 /*****************************/
 /*****************************/
@@ -252,21 +208,29 @@ function adversairesRencontres ($joueur)
 /******                 ******/
 /*****************************/
 /*****************************/
-function loseMatches ($joueur, $matches)
+function ajouterResultat ($joueur,$deckAdverse)
 {
 	$sql = "INSERT INTO resultats (id_deck1,id_deck2,resultat_deck1,resultat_deck2,saison,ligue) VALUES (:id1,:id2,0,2,:s,:l);";
 	$donnees = array(
 		':id1'	=> $joueur['deck'],
+		':id2'	=> $deckAdverse,
 		':s'	=> $joueur['saison'],
 		':l'	=> $joueur['ligue'],
 	);
+	executerRequete($sql, $donnees);
+	return false;
+}
 
-	for ($i = 0; $i < count($matches); $i++)
-	{
-		$donnees[':id2'] = $matches[$i];
-		executerRequete($sql, $donnees);
-	}
-
+function supprimerMatch ($joueur, $deckAdverse)
+{
+	$sql = "DELETE FROM resultats WHERE ((id_deck1 = :id1 AND id_deck2 = :id2) OR (id_deck1 = :id2 AND id_deck2 = :id1)) AND saison = :s AND ligue = :l;";
+	$donnees = array(
+		':id1'	=> $joueur['deck'],
+		':id2'	=> $deckAdverse,
+		':s'	=> $joueur['saison'],
+		':l'	=> $joueur['ligue'],
+	);
+	executerRequete($sql,$donnees);
 	return false;
 }
 
@@ -289,4 +253,40 @@ function getInfoLigue ($params)
 	);
 
 	return executerRequete($sql,$donnees)->fetch();
+}
+
+/*****************************/
+/*****************************/
+/******                 ******/
+/******      TABLE      ******/
+/******  PAUSES / DROP  ******/
+/******                 ******/
+/******     SETTERS     ******/
+/******                 ******/
+/*****************************/
+/*****************************/
+function addPause ($params)
+{
+	$sql = "INSERT INTO pauses (id_discord,pseudo,saison,ligue) VALUES (:id, :pseudo, :s, :l);";
+	$donnees = array(
+		':id'	=> $params['id'],
+		':pseudo'	=> $params['pseudo'],
+		':s'	=> $params['saison'],
+		':l'	=> $params['ligue'],
+	);
+	executerRequete($sql,$donnees);
+	return false;
+}
+
+function addDrop ($params)
+{
+	$sql = "INSERT INTO drops (id_discord,pseudo,saison,ligue) VALUES (:id, :pseudo, :s, :l);";
+	$donnees = array(
+		':id'	=> $params['id'],
+		':pseudo'	=> $params['pseudo'],
+		':s'	=> $params['saison'],
+		':l'	=> $params['ligue'],
+	);
+	executerRequete($sql,$donnees);
+	return false;
 }
