@@ -276,3 +276,39 @@ function getInfoLigue ($params)
 
 	return executerRequete($sql,$donnees)->fetch();
 }
+
+/*****************************/
+/*****************************/
+/******                 ******/
+/******      TABLE      ******/
+/******  PAUSES / DROP  ******/
+/******                 ******/
+/******     SETTERS     ******/
+/******                 ******/
+/*****************************/
+/*****************************/
+function addPause ($params)
+{
+	$sql = "INSERT INTO pauses (id_discord,pseudo,saison,ligue) VALUES (:id, :pseudo, :s, :l);";
+	$donnees = array(
+		':id'	=> $params['id'],
+		':pseudo'	=> $params['pseudo'],
+		':s'	=> $params['saison'],
+		':l'	=> $params['ligue'],
+	);
+	executerRequete($sql,$donnees);
+	return false;
+}
+
+function addDrop ($params)
+{
+	$sql = "INSERT INTO drops (id_discord,pseudo,saison,ligue) VALUES (:id, :pseudo, :s, :l);";
+	$donnees = array(
+		':id'	=> $params['id'],
+		':pseudo'	=> $params['pseudo'],
+		':s'	=> $params['saison'],
+		':l'	=> $params['ligue'],
+	);
+	executerRequete($sql,$donnees);
+	return false;
+}

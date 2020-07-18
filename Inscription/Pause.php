@@ -19,6 +19,9 @@ function Action ($params)
 	// On bascule tous les résultats restants à 0-2
 	endLigue($joueur);
 
+	// On ajoute le joueur à la table des pauses
+	addPause($joueur);
+
 	// Elements du message qui sera retourné au bot
 	$pseudo = getPseudo($joueur['id']);
 	$ligue = getLigue($joueur['id']);

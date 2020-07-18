@@ -23,7 +23,7 @@ function Action ($params)
 	departJoueur($joueur['id']);
 
 	// On l'ajoute à la table des drops
-	dropJoueur($joueur);
+	addDrop($joueur);
 
 	// On passe ses decks à non-joués
 	decksNonJoues($joueur['id']);
