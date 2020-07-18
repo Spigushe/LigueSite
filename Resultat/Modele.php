@@ -1,30 +1,20 @@
 <?php
-function joueurParPseudo ($pseudo)
+function infosParticipant (&$joueur)
 {
-	if ($pseudo != "") {
-		// On va chercher si le joueur existe
-		$sql = "SELECT id_discord FROM participants WHERE pseudo LIKE :pseudo;";
-		$resultat = executerRequete($sql,array(':pseudo'=>$pseudo))->fetchColumn();
-		// Traitement du retour
-		if ($resultat != "")
-		{
-			return $resultat;
-		}
-		return '002';
-	}
-	return '001';
-}
+	$sql = "SELECT * FROM participants WHERE pseudo LIKE :pseudo;";
+	$donnees = array(':pseudo'=>$joueur['pseudo']);
+	$requete = executerRequete($sql,$donnees);
+	$resultat = $requete->fetch();
 
-function getLigue ($id_discord)
-{
-	$sql = "SELECT nom_role FROM participants WHERE id_discord = :id";
-	$resultat = executerRequete($sql,array(':id'=>$id_discord))->fetchColumn();
-	// Traitement du retour
-	if ($resultat == '')
-	{
-		return 'e107';
+	if(count($resultat) == 0) {
+		return true; // Il y a un problème
 	}
-	return $resultat;
+
+	$joueur['id'] = $resultat['id_discord'];
+	$joueur['ligue'] = $resultat['nom_role'];
+	$joueur['elo'] = $resultat['elo'];
+
+	return false; // Il n'y a pas de problème
 }
 
 function deckParJoueur ($id_discord)
@@ -85,6 +75,26 @@ function ajouterResultat ($joueur1, $joueur2)
 		)
 	);
 
+	modificationElo($joueur1);
+	modificationElo($joueur2);
+
 	// Retour de la fonction : la ligue
 	return "OK--" . $joueur1['ligue'];
+}
+
+function eloJoueur ($id_joueur)
+{
+	$sql = "SELECT elo FROM participants WHERE id_discord LIKE :id;";
+	$donnees = array(':id'=>$id_joueur);
+	return executerRequete($sql,$donnees)->fetch();
+}
+
+function modificationElo ($joueur)
+{
+	$sql = "UPDATE participants SET elo = :elo WHERE id_discord = :id;";
+	$donnees = array(
+		':elo' => $joueur['elo'],
+		':id' => $joueur['id'],
+	);
+	executerRequete($sql,$donnees);
 }
