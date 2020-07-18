@@ -5,17 +5,17 @@ function endLigue ($joueur)
 {
 	// Infos sur le joueur et la ligue
 	$listeAdversaire = preg_split("/, /i",getInfoLigue($joueur)['liste_decks']);
-	
+
 	for ($i = 0; $i < count($listeAdversaire); $i++)
 	{
 		if ($listeAdversaire[$i] == $joueur['deck'])
 		{
 			continue;
 		}
-		
+
 		// On supprime tous les matches déjà joués
-		supprimeMatch($joueur,$listeAdversaire[$i]);
-			
+		supprimerMatch($joueur,$listeAdversaire[$i]);
+
 		// On fait perdre tous les matches
 		ajouterResultat($joueur,$listeAdversaire[$i]);
 	}
@@ -153,28 +153,6 @@ function roleExiste ($nom) {
 	// On va regarder le résultat
 	if ($requete->fetchColumn() > 0) { return 'XXX'; }
 	return 'e108';
-}
-
-/*****************************/
-/*****************************/
-/******                 ******/
-/******      TABLE      ******/
-/******      DROPS      ******/
-/******                 ******/
-/******     SETTERS     ******/
-/******                 ******/
-/*****************************/
-/*****************************/
-function dropJoueur ($joueur)
-{
-	$sql = "INSERT INTO drops (id_discord,ligue,saison) VALUES (:id, :ligue, :saison);";
-	$data = array(
-		':id'		=> $joueur['id'],
-		':ligue'	=> $joueur['ligue'],
-		':saison'	=> $joueur['saison'],
-	);
-	executerRequete($sql,$data);
-	return "OK";
 }
 
 /*****************************/
