@@ -25,9 +25,8 @@ function dejaInscrit ($id_discord) {
 		// On va regarder le résultat
 		if ($requete->fetchColumn() > 0) { return 'e103'; }
 		return 'XXX';
-	} else {
-		return '001';
 	}
+	return '001';
 }
 
 function ajoutRole ($parametres) {
