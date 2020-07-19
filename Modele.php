@@ -1,5 +1,4 @@
 <?php
-require_once "BD/dicoTables.php";
 require_once "BD/dicoErreurs.php";
 
 function getBdd() {
@@ -16,7 +15,7 @@ function executerRequete($sql, $params = null) {
 		$resultat = getBdd()->query($sql);   // exécution directe
 		return $resultat;
 	}
-	
+
 	$resultat = getBdd()->prepare($sql); // requête préparée
 	$resultat->execute($params);
 	return $resultat;
