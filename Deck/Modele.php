@@ -52,16 +52,16 @@ function setAncienDeck ($id_discord)
 /******                 ******/
 /*****************************/
 /*****************************/
-function getListeJSON ($id) {
-	return json_encode(getListe($id)['deck']);
+function getListeJSON ($id_liste) {
+	return json_encode(getListe($id_liste)['deck']);
 }
 
-function getGeneralJSON ($id) {
-	return json_encode(getListe($id)['general']);
+function getGeneralJSON ($id_liste) {
+	return json_encode(getListe($id_liste)['general']);
 }
 
-function getListe ($id) {
-	$liste = file_get_contents_utf8("https://magic-ville.fr/fr/decks/dl_appr.php?ref=".$id);
+function getListe ($id_liste) {
+	$liste = file_get_contents_utf8("https://magic-ville.fr/fr/decks/dl_appr.php?ref=".$id_liste);
 	$liste = preg_split('/<br>/i', $liste, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE)[0];
 	return listeMVtoArray($liste);
 }
