@@ -31,11 +31,12 @@ function afficheGeneralMetagame ($texte) {
 	// S'il n'y a qu'une carte
 	if ($contraintes == "") return $texte;
 
+	$retour = "";
 	// Traitement des partenaires
 	if (preg_match('/p/i',$contraintes)) {
 		$liste_partners = (preg_match('/c/i',$contraintes)) ? preg_split('/\(/',$texte)[0] : $texte;
 		$partenaires = array(preg_split('/\/\//i',$liste_partners)[0],preg_split('/\/\//i',$liste_partners)[1]);
-		$retour = imagePartenaires("principal") . "<div>" . $partenaires[0] . "<br />" . $partenaires[1] . "</div>";
+		$retour .= imagePartenaires("principal") . "<div>" . $partenaires[0] . "<br />" . $partenaires[1] . "</div>";
 	}
 
 	// Traitement des compagnons
@@ -43,13 +44,10 @@ function afficheGeneralMetagame ($texte) {
 		$compagnon = substr(preg_split('/\(/',$texte)[1],0,strlen(preg_split('/\(/',$texte)[1])-1);
 		// S'il y a en plus des partenaires
 		if (preg_match('/p/i',$contraintes)) {
-			$retour .= "<div>" . imageCompagnon() . $compagnon . "</div>";
+			return $retour . "<div>" . imageCompagnon() . $compagnon . "</div>";
 		}
 		// S'il n'y a pas de partenaires
-		else {
-			$retour = preg_split('/\(/i',$texte)[0] . //
-						"<div>" . imageCompagnon() . $compagnon . "</div>";
-		}
+		return $retour . preg_split('/\(/i',$texte)[0] . "<div>" . imageCompagnon() . $compagnon . "</div>";
 	}
 
 	return $retour;
