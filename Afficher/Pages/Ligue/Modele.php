@@ -25,7 +25,7 @@ function afficheGeneral ($texte) {
 			preg_split('/\/\//i',$liste_partners)[1]
 		);
 		//Le retour
-		$retour = imagePartenaires() . $partenaires[0] . " / " . $partenaires[1];
+		$retour = __PARTENAIRES__ . $partenaires[0] . " / " . $partenaires[1];
 	}
 
 	// Traitement des compagnons
@@ -33,7 +33,7 @@ function afficheGeneral ($texte) {
 		$compagnon = substr(preg_split('/\(/',$texte)[1],0,strlen(preg_split('/\(/',$texte)[1])-1);
 		// S'il n'y avait pas de partenaires, on va juste ajouter ce qu'il y a avant la parenthèse
 		$retour = (preg_match('/p/i',$contraintes)) ? $retour : preg_split('/\(/i',$texte)[0];
-		$retour .= " ( " . imageCompagnon() . " " . $compagnon . ")";
+		$retour .= " ( " . __COMPAGNON__ . " " . $compagnon . ")";
 	}
 
 	return $retour;

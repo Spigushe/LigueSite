@@ -8,16 +8,15 @@ Avoir un tableau global qui reprend toutes les infos d'un joueur
 
 $helper = array(); /** VARIABLE DE STOCKAGE **/
 $helper['infos'] = array(
-	'pseudo'	=> stripslashes($_GET['joueur']),
+	'pseudo'	=> ucfirst(stripslashes($_GET['joueur'])),
 	'decks'		=> array(),
 	'generaux'	=> array(),
-	'ligues'	=> array(),
-	'saisons'	=> array(),
 	'victoires'	=> 0,
 	'defaites'	=> 0,
 	'matchWins'	=> 0,
 	'matchLoss'	=> 0,
 );
+$helper['saison'] = array();
 
 /*****************************/
 /*****************************/
@@ -81,29 +80,43 @@ while ($resultat = $requete->fetch()) {
 		continue;
 	}
 
-	// id du deck
+	/* REFONTE DU HELPER */
+	// Affichage par saison au lieu de id_deck
+
+	// On ajoute l'id du deck aux decks joués
 	$helper['infos']['decks'][] = $resultat['id_deck'];
-	// infos du deck
+
+	// On ajoute le général aux généraux joués
+	if (!in_array($resultat['general'], $helper['infos']['generaux'])) {
+		$helper['infos']['generaux'][] = $resultat['general'];
+	}
+
+	/**** CREATION DES ENTREES ****/
+	// On enregistre le deck avec sa clé
 	$helper['deck'][$resultat['id_deck']] = array(
-		'ligue'		=> array(),
-		'saison'	=> array(),
+		'ligues'	=> array(),
 		'victoires'	=> 0,
 		'defaites'	=> 0,
 		'liste'		=> json_decode($resultat['liste'], TRUE),
 		'general'	=> $resultat['general'],
 	);
 
-	// infos sur les généraux
-	if (!in_array($resultat['general'], $helper['infos']['generaux'])) {
-		$helper['infos']['generaux'][] = $resultat['general'];
+	// On enregistre le deck avec l'index 'saison'
+	for ($i = 0; $i < count($_decks[$resultat['id_deck']]); $i++) {
+		$saison = $_decks[$resultat['id_deck']][$i]['saison'];
+		$saison -= (preg_match("/Placement/i",$_decks[$resultat['id_deck']][$i]['ligue'])) ? 1 : 0;
+		$helper['saison'][$saison] = array(
+			'ligue'		=> $_decks[$resultat['id_deck']][$i]['ligue'],
+			'general'	=> $resultat['general'],
+			'id_deck'	=> (!preg_match("/Placement/i",$_decks[$resultat['id_deck']][$i]['ligue'])) ? $resultat['id_deck'] : 0,
+			'victoires'	=> 0,
+			'defaites'	=> 0,
+		);
 	}
 
+	/**** AJOUT DES PREMIERES INFORMATIONS ****/
 	// Ligue jouée par le joueur
 	for ($i = 0; $i < count($_decks[$resultat['id_deck']]); $i++) {
-		if (preg_match("/Playoff/", $_decks[$resultat['id_deck']][$i]['ligue'])) {
-			// Ne pas afficher les playoffs dans les ligues jouées
-			continue;
-		}
 		// Renseignement des ligues
 		$helper['infos']['ligues'][] = $_decks[$resultat['id_deck']][$i]['ligue'];
 		$helper['deck'][$resultat['id_deck']]['ligue'][] = $_decks[$resultat['id_deck']][$i]['ligue'];
@@ -143,3 +156,4 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		$helper['infos']['matchLoss']  += ($p_score > $o_score) ? 0 : 1;
 	}
 }
+print_r($helper);
