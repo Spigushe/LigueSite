@@ -11,7 +11,7 @@ Avoir un tableau global qui reprend toutes les infos d'une ligue et d'une saison
  ******   Fin    ******/
 
 $helper = array(); /** VARIABLE DE STOCKAGE **/
-$ligue = __LIGUE__; /** FIXING SQL QUERY **/
+$ligue = preg_split("/-/i",__LIGUE__)[0]; /** FIXING SQL QUERY **/
 
 /*****************************/
 /*****************************/
@@ -21,7 +21,7 @@ $ligue = __LIGUE__; /** FIXING SQL QUERY **/
 /*****************************/
 /*****************************/
 $sql = "SELECT * FROM ligues
-		WHERE num_saison = :s AND nom_ligue LIKE :l;";
+		WHERE num_saison = :s AND nom_ligue LIKE '%$ligue%';";
 // On prépare les variables de base
 $helper['infos']['saison'] = __SAISON__;
 $helper['infos']['ligue']  = $ligue;
@@ -30,7 +30,6 @@ $helper['groupe'] = array();
 // On prépare le tableau de données
 $donnees = array(
 	':s' => __SAISON__,
-	':l' => __LIGUE__,
 );
 // On exécute la requête
 $requete = executerRequete($sql,$donnees);

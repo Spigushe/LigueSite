@@ -42,7 +42,7 @@ $sql = "SELECT liste_decks FROM ligues
 		WHERE num_saison = :s AND nom_ligue = :l;";
 // On prépare les variables de base
 $helper['infos']['saison'] = __SAISON__;
-$helper['infos']['ligue']  = (__SAISON__ < 3) ? preg_split("/-/",__LIGUE__)[0] : __LIGUE__;
+$helper['infos']['ligue']  = (preg_match("/Placement/i",__LIGUE__) || preg_match("/Playoff/i",__LIGUE__)) ? preg_split("/-/",__LIGUE__)[0] : __LIGUE__ ;
 // On prépare le tableau de données
 $donnees = array(
 	':l' => __LIGUE__,
