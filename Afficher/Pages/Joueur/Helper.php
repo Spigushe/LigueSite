@@ -6,9 +6,11 @@ Avoir un tableau global qui reprend toutes les infos d'un joueur
 	|- Liste des ligues et des saisons
 /******   Fin    ******/
 
+// Vérification
+$joueur = (isset($parametres['joueur']) && ($parametres['joueur'] != "")) ? $parametres['joueur'] : "" ;
 $helper = array(); /** VARIABLE DE STOCKAGE **/
 $helper['infos'] = array(
-	'pseudo'	=> ucfirst(stripslashes($_GET['joueur'])),
+	'pseudo'	=> ucfirst($joueur),
 	'decks'		=> array(),
 	'generaux'	=> array(),
 	'victoires'	=> 0,
@@ -156,4 +158,3 @@ for ($i = 0; $i < count($helper['infos']['decks']); $i++) {
 		$helper['infos']['matchLoss']  += ($p_score > $o_score) ? 0 : 1;
 	}
 }
-print_r($helper);
