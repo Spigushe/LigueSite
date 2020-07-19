@@ -1,0 +1,2 @@
+# LigueSite
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a6bb97ffbcc2436a847662840d0017f8)](https://app.codacy.com/manual/martin.cuchet/LigueSite?utm_source=github.com&utm_medium=referral&utm_content=Spigushe/LigueSite&utm_campaign=Badge_Grade_Dashboard)
