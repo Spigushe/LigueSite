@@ -24,12 +24,12 @@
 
 	<?php require_once 'Afficher/Elements/Menu.php'; ?>
 
-	<?php if (isset($_GET['saison']) && isset($_GET['ligue'])) : ?>
-		<div class="display-4 mb-5">Saison <?= $_GET['saison'] ?> - Ligue <?= ucfirst($_GET['ligue']) ?></div>
+	<?php if (__LIGUE__ != "") : ?>
+		<div class="display-4 mb-5">Saison <?= __SAISON__ ?> - Ligue <?= ucfirst(__LIGUE__) ?></div>
 	<?php endif; ?>
 
-	<?php if (isset($_GET['saison']) && !isset($_GET['ligue'])) : ?>
-		<div class="display-5 mb-5">Avancement de la saison en cours</div>
+	<?php if (__LIGUE__ == "") : ?>
+		<div class="display-4 mb-5">Avancement de la saison en cours</div>
 	<?php endif; ?>
 
 	<div id="contenu">

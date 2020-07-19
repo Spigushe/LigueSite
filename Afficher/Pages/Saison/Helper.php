@@ -22,7 +22,7 @@ $helper = array(); /** VARIABLE DE STOCKAGE **/
 $sql = "SELECT * FROM ligues
 		WHERE num_saison = :s AND nom_ligue NOT LIKE '%Placement%';";
 // On prépare les variables de base
-$helper['infos']['saison'] = (!isset($_GET['saison']) || ($_GET['saison'] == "")) ? __SAISON__ : $_GET['saison'];
+$helper['infos']['saison'] = __SAISON__;
 $helper['infos']['groupes'] = array();
 $helper['groupe'] = array();
 // On prépare le tableau de données

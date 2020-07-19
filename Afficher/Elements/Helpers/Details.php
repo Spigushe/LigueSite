@@ -41,11 +41,11 @@ $helper = array(); /** VARIABLE DE STOCKAGE **/
 $sql = "SELECT liste_decks FROM ligues
 		WHERE num_saison = :s AND nom_ligue = :l;";
 // On prépare les variables de base
-$helper['infos']['saison'] = $_GET['saison'];
-$helper['infos']['ligue']  = ($_GET['saison'] < 3) ? preg_split("/-/",$_GET['ligue'])[0] : $_GET['ligue'];
+$helper['infos']['saison'] = __SAISON__;
+$helper['infos']['ligue']  = (__SAISON__ < 3) ? preg_split("/-/",__LIGUE__)[0] : __LIGUE__;
 // On prépare le tableau de données
 $donnees = array(
-	':l' => $_GET['ligue'],
+	':l' => __LIGUE__,
 	':s' => $helper['infos']['saison'],
 );
 // On exécute la requête
