@@ -28,10 +28,12 @@ require_once 'Afficher/Elements/Tableaux/TableauClassement.php';
 /******                 ******/
 /*****************************/
 /*****************************/
+define('__COMPAGNON__',"<img src='/Afficher/Icones/Companion.png' width='16px' title='img_compagnon'  />";)
 function imageCompagnon ($texte = "") {
 	return "<img src='/Afficher/Icones/Companion.png' width='16px' title='$texte'  />";
 }
 
+define('__PARTENAIRES__',"<img src='/Afficher/Icones/Partner.png' width='16px' title='img_partenaire'  />";)
 function imagePartenaires ($place = "" , $texte = "") {
 	if ($place == "principal") {
 		return "<img src='/Afficher/Icones/Partner.png' width='48px' title='$texte' class='float-left mx-2' />";}
