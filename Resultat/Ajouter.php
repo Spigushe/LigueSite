@@ -38,11 +38,11 @@ function nouveauResultat ($informations)
 	// Récupération du deck du joueur 2
 	$joueur2['deck'] = deckParJoueur($joueur2['id']);
 	// Tests
-	if (isset($_SESSION['dicoErreurs'][$joueur1['deck']])) {
-		return $_SESSION['dicoErreurs'][$joueur1['deck']];
+	if (isset(__ERREURS__[$joueur1['deck']])) {
+		return __ERREURS__[$joueur1['deck']];
 	}
-	if (isset($_SESSION['dicoErreurs'][$joueur2['deck']])) {
-		return $_SESSION['dicoErreurs'][$joueur2['deck']];
+	if (isset(__ERREURS__[$joueur2['deck']])) {
+		return __ERREURS__[$joueur2['deck']];
 	}
 
 	// Combien y a-t-il de résultats saisis pour cette paire ?

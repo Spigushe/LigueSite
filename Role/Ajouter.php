@@ -8,7 +8,7 @@ function nouveauRole ($informations) {
 	// Contrôle de l'unicité de l'inscription
 	$controle = dejaInscrit($informations['id_discord']);
 	if ($controle != 'XXX') {
-		return $_SESSION['dicoErreurs'][$controle];
+		return __ERREURS__[$controle];
 	}
 
 	// Ajout dans la table des decks

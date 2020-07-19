@@ -1,5 +1,5 @@
 <?php
-$_SESSION['dicoErreurs'] = array(
+define('__ERREURS__',array(
 	// Erreurs de l'utilisateur
 	'001'	=>	"Erreur 001 : Données incomplètes\n",
 	'002'	=>	"Erreur 002 : Pseudo cockatrice non reconnu\n",
@@ -18,4 +18,4 @@ $_SESSION['dicoErreurs'] = array(
 
 	/** FIN DU TABLEAU **/
 	/** 'XXX' pour aucune erreur **/
-);
+));

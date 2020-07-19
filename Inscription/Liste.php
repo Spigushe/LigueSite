@@ -4,7 +4,7 @@ function Action ($params)
 {
 	// Est-ce que la ligue existe ?
 	if (roleExiste($params['role']) != 'XXX') {
-		return $_SESSION['dicoErreurs'][roleExiste($params['role'])];
+		return __ERREURS__[roleExiste($params['role'])];
 	}
 
 	// On récupère la liste des joueurs avec ce rôle

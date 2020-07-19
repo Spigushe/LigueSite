@@ -27,5 +27,5 @@ function Action ($params)
 	$ligue = getLigue($joueur['id']);
 
 	// On vérifie que l'utilisateur fait partie d'une ligue
-	return (isset($_SESSION['dicoErreurs'][$ligue])) ? $_SESSION['dicoErreurs'][$ligue] : $joueur['pseudo']."--".$joueur['ligue'];
+	return (isset(__ERREURS__[$ligue])) ? __ERREURS__[$ligue] : $joueur['pseudo']."--".$joueur['ligue'];
 }

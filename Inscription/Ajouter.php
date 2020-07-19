@@ -4,7 +4,7 @@ function Action ($params) {
 	// Premier contrôle
 	if (!isset($params['id']) || ($params['id'] == "")) {
 		// données manquantes
-		return $_SESSION['dicoErreurs']['001'];
+		return __ERREURS__['001'];
 	}
 
 	// Est-ce que l'ID_DISCORD est déjà dans la base
@@ -17,7 +17,7 @@ function Action ($params) {
 
 			/*******  Utilisateur déjà dans la base  *******/
 			/******* Utilisateur affecté à une ligue *******/
-			return $_SESSION['dicoErreurs']['e101'];
+			return __ERREURS__['e101'];
 		}
 
 		/*******  Utilisateur déjà dans la base  *******/
