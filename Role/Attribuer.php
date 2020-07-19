@@ -1,50 +1,62 @@
 <?php
-/*************************
- * nouveauRole           *
- * @param tableau $_POST *
- * @return
- * id_discord_joueur--id_discord_ancien_role--id_discord_nouveau_role *
- *************************/
-function attribuerRole ($informations) {
-	// Récupérer le pseudo discord du joueur cockatrice
-	if (isset($informations['pseudo']) && ($informations['pseudo'] == '')) {
-		return $_SESSION['dicoErreurs']['002'];
+
+function Action ($informations)
+{
+	// Contrôles
+	if (!isset($informations['pseudo']) || !isset($informations['role']))
+	{
+		return "Erreur: Il manque des informations";
 	}
-	$id_joueur = recupererIdJoueur($informations['pseudo']);
-
-	// Récupérer l'id de l'ancien rôle
-	$id_ancien = recupererIdRoleJoueur($informations['pseudo']);
-
-	// Récupérer l'id du nouveau rôle
-	if (isset($informations['role']) && ($informations['role'] == '')) {
-		return $_SESSION['dicoErreurs']['003'];
+	if (($informations['pseudo'] == "") || ($informations['role'] == ""))
+	{
+		return "Erreur: Les informations sont incomplètes";
 	}
-	$id_nouveau = recupererIdRole($informations['role']);
 
-	// Retour de la fonction
-	modifierRole($informations['pseudo'], $informations['role']);
-	return $id_joueur . '--' . $id_ancien . '--' . $id_nouveau;
+	// Collecte des informations de la base
+	$joueur = array(
+		'pseudo'	=> $informations['pseudo'],
+	);
+	getInfosJoueur($joueur);
+
+	// Collecte des informations du nouveau role
+	$role = getRole($informations['role']);
+
+	// Modification dans la base
+	modifierRole($joueur,$role);
+
+	// Retour pour le bot : id_joueur--id_acien--id_nouveau
+	return $joueur['id_discord']."--".$joueur['id_role']."--".$role['id_role'];
 }
 
-function recupererIdJoueur ($pseudo) {
-	return executerRequete("SELECT id_discord FROM participants WHERE pseudo LIKE '%$pseudo%' ORDER BY id_discord DESC;")->fetchColumn();
+function getInfosJoueur (&$joueur)
+{
+	$sql = "SELECT * FROM participants p JOIN roles r ON p.nom_role = r.nom_role WHERE p.pseudo LIKE :pseudo;";
+	$donnees = array(
+		':pseudo' => $joueur['pseudo'],
+	);
+	$requete = executerRequete($sql,$donnees);
+	$joueur = $requete->fetch();
+
+	return false;
 }
 
-function recupererIdRoleJoueur ($pseudo) {
-	$sql =	"SELECT roles.id_discord ".//
-			"FROM roles ".//
-			"INNER JOIN participants ON roles.nom_role LIKE participants.nom_role ".//
-			"WHERE participants.pseudo LIKE '%$pseudo%';";
-	return executerRequete($sql)->fetchColumn();
+function getRole ($param)
+{
+	$sql = "SELECT * FROM roles WHERE nom_role LIKE :role;";
+	$donnees = array(
+		':role' => $param
+	);
+	return executerRequete($sql,$donnees)->fetch();
 }
 
-function recupererIdRole ($nom) {
-	return executerRequete("SELECT id_discord FROM roles WHERE nom_role LIKE '%$nom%' ORDER BY id_discord DESC;")->fetchColumn();
-}
+function modifierRole ($joueur, $role)
+{
+	$sql = "UPDATE participants SET nom_role = :role WHERE id_discord = :id;";
+	$donnees = array(
+		':role'	=> $role['nom_role'],
+		':id'	=> $joueur['id_discord'],
+	);
+	executerRequete($sql,$donnees);
 
-function modifierRole ($pseudo, $role) {
-	$sql =	"UPDATE participants ".//
-			"SET `nom_role` = '$role' ".//
-			"WHERE pseudo LIKE '%$pseudo%'";
-	return executerRequete($sql);
+	return false;
 }

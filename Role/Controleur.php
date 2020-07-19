@@ -9,7 +9,7 @@ if (isset($parametres['action']) && ($parametres['action'] != "")) {
 			break;
 		case 'Attribuer':
 			require_once $parametres['page']."/".$parametres['action'].".php";
-			echo attribuerRole($parametres);
+			echo Action($parametres);
 			break;
 		default:
 			$titre_page = " - Accueil";
