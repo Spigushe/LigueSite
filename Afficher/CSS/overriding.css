@@ -6,7 +6,9 @@ body {
 }
 
 h1 {
-  font-family: pr-columbandemo;
+  font-family:
+    pr-columbandemo,
+	cursive;
 }
 
 .navbar {
