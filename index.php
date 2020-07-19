@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // Est-on en Playoffs ?
 define('__PLAYOFF__', 1);
 // Nombre max de matches par saison
