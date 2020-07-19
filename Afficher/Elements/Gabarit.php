@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-	<h1 class="display-2 m-3 p-1">
+	<h1 class="display-2 m-3 p-1 custom-font">
 		<img src="Afficher/CSS/Images/Logo.png" height="200" class='float-right mx-2' alt="">
 		Commander League
 	</h1>
@@ -38,9 +38,81 @@
 
 	<div class="pb-3">
 	</div>
+</div>
 
-	<footer class="container sticky-bottom text-center">
-	2020 - <b>Commander League</b>, un projet de Guillaume "Cleomene" Cailliez avec l'assistance de Geoffrey "Linkanor" et de Martin "Spigushe"
+<div class="container">
+	<footer class="container sticky-bottom bg-dark d-inline-flex py-3 px-1">
+		<img src="Afficher/CSS/Images/Logo.png" class="col-2" />
+
+		<div class="col-3">
+			<strong class="text-info custom-font">Commander League</strong><br>
+			Projet de ligue Duel Commander en ligne en alliant
+			<a href="https://discord.gg/vbTyu9A"
+				target="_blank" class="text-decoration-none text-white">
+				Discord
+			</a>
+			et
+			<a href="https://cockatrice.github.io/"
+				target="_blank" class="text-decoration-none text-white">
+				Cockatrice
+			</a>
+			créé par Guillaume Cailliez
+			avec le soutien technique de Martin Cuchet
+
+			<br><br>
+			Vous pouvez nous retrouver sur
+			<a href="https://www.facebook.com/liguecommander"
+				target="_blank" class="text-decoration-none text-white">
+				Facebook
+			</a>
+			et sur
+			<a href="https://discord.gg/vbTyu9A"
+				target="_blank" class="text-decoration-none text-white">
+				Discord
+			</a>
+		</div>
+
+		<div class="col-3">
+			<strong class="text-info custom-font">Ressources</strong><br>
+			<a href="https://docs.google.com/document/d/18_-bRp1yxlMS9Vkz5fQ9ypG8J49oPEZkfBEp1QnhhV0"
+				target="_blank" class="text-decoration-none text-white">
+				Règlement de la ligue
+			</a><br>
+			<a href="https://www.facebook.com/notes/mtg-duel-commander/duel-commander-current-lists/1698432663740967"
+				target="_blank" class="text-decoration-none text-white">
+				Liste des cartes bannies
+			</a><br><br>
+
+			Cockatrice et Discord sont des outils disponibles sur
+			toute plateforme<br><br>
+
+			<div class="my-2 d-inline-flex flex-wrap">
+				<a href="https://www.facebook.com/liguecommander" target="_blank" class="mx-2">
+					<img src="/Afficher/CSS/Images/Facebook.png" height="32" alt="" />
+				</a>
+				<a href="https://discord.gg/vbTyu9A" target="_blank" class="mx-2">
+					<img src="/Afficher/CSS/Images/Discord.png" height="32" alt="" />
+				</a>
+				<a href="https://cockatrice.github.io/" target="_blank" class="mx-2">
+					<img src="/Afficher/CSS/Images/Cockatrice.png" height="32" alt="Cockatrice" />
+				</a>
+				<a href="https://github.com/Spigushe/LigueSite" target="_blank" class="mx-2">
+					<img src="/Afficher/CSS/Images/GitHub.png"  height="32" alt="GitHub" />
+				</a>
+			</div>
+		</div>
+
+		<div class="col-3">
+			<strong class="text-info custom-font">Nous aider</strong><br>
+			L'ensemble de la ligue est disponible en open-source sur
+			<a href="https://github.com/Spigushe/LigueSite"
+				target="_blank" class="text-decoration-none text-white">
+				GitHub
+			</a>.
+			Les contributions sont les bienvenues. Les Pull Requests
+			seront fusionnées si elles respectent le style général.
+			Les problèmes seront réglés au plus vite
+		</div>
 	</footer>
 </div>
 
@@ -57,7 +129,6 @@
 <!-- https://tappedout.github.io/ --><script src="http://tappedout.net/tappedout.js"></script>
 
 <!-- ToolTip -->
-<script src="popper.min.js"></script>
 <script>
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()

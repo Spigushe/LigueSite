@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark my-3 mb-5">
 	<!-- Logo -->
-	<a href="https://discord.gg/vbTyu9A" target="_blank">
+	<!--<a href="https://discord.gg/vbTyu9A" target="_blank">
 		<img src="https://discord.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg" height="45" alt="" />
-	</a>
+	</a>-->
 	<!-- Toggle -->
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	<span class="navbar-toggler-icon"></span>
