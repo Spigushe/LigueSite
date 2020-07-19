@@ -5,7 +5,7 @@
 @font-face {
     font-family: 'pr-columbandemo';
     src: url('Fichiers/pr-columbandemo.woff2') format('woff2'),
-         url('Fichiers/pr-columbandemo.woff') format('woff');
+         	url('Fichiers/pr-columbandemo.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
