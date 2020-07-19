@@ -14,6 +14,7 @@ define('__ERREURS__',array(
 	'e106'	=>	"Erreur 106 : Les deux participant.e.s ne font pas partie de la même ligue",
 	'e107'	=>	"Erreur 107 : Le.La participant.e n'est pas affecté.e à un rôle",
 	'e108'	=>	"Erreur 108 : Le rôle n'existe pas",
+	'e109'	=>	"Erreur 109 : Nombre maximal de résultats saisis pour ce match",
 
 
 	/** FIN DU TABLEAU **/

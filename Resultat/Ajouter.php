@@ -15,22 +15,17 @@ function nouveauResultat ($informations)
 	);
 
 	// Récupération des infos de la table 'participants'
-	if (infosParticipant($joueur1)) {
-		return "Erreur: Joueur '".$joueur1['pseudo']."' absent de la base de données";
-	}
-	if (infosParticipant($joueur2)) {
-		return "Erreur: Joueur '".$joueur2['pseudo']."' absent de la base de données";
+	if (infosParticipant($joueur1) || infosParticipant($joueur1)) {
+		return __ERREURS__['002'];
 	}
 	// Jouent-ils dans la même ligue ?
 	if ($joueur2['ligue'] != $joueur2['ligue']){
-		return "Erreur 106 : Les deux participant.e.s ne font pas partie de la même ligue";
+		return __ERREURS__['e106'];
 	}
 
 	// Vérification de la saison
 	$joueur1['saison'] = __SAISON__;
-	if (preg_match("/Placement/i",$joueur1['ligue'])) {
-		$joueur1['saison'] += 1;
-	}
+	$joueur1['saison'] +=  (preg_match("/Placement/i",$joueur1['ligue'])) ? 1 : 0;
 	$joueur2['saison'] = $joueur1['saison'];
 
 	// Récupération du deck du joueur 1
@@ -38,17 +33,13 @@ function nouveauResultat ($informations)
 	// Récupération du deck du joueur 2
 	$joueur2['deck'] = deckParJoueur($joueur2['id']);
 	// Tests
-	if (isset(__ERREURS__[$joueur1['deck']])) {
-		return __ERREURS__[$joueur1['deck']];
-	}
-	if (isset(__ERREURS__[$joueur2['deck']])) {
-		return __ERREURS__[$joueur2['deck']];
+	if (isset(__ERREURS__[$joueur1['deck']]) ||isset(__ERREURS__[$joueur2['deck']])) {
+		return __ERREURS__['e105'];
 	}
 
 	// Combien y a-t-il de résultats saisis pour cette paire ?
-	$nb_match = max(0,nombreMatches($joueur1, $joueur2));
-	if ($nb_match >= __MAX_MATCHES__) {
-		return "Erreur : Résultat déjà saisi";
+	if (max(0,nombreMatches($joueur1, $joueur2)) >= __MAX_MATCHES__) {
+		return __ERREURS__['e109'];
 	}
 
 	// Calcul du changement d'elo
