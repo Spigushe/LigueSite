@@ -59,7 +59,7 @@ $sql = "SELECT * FROM resultats r
 // On parcourt les ligues
 for ($i = 0; $i < count($helper['infos']['groupes']); $i++) {
 	$groupe = $helper['infos']['groupes'][$i];
-	$donnees[':l'] = $groupe;
+	$donnees[':l'] = preg_split("/-/",$groupe)[0];
 	// On parcourt la liste des decks
 	foreach ($helper['groupe'][$groupe]['decks'] as $key => $value) {
 		// On dit sur quel deck on fait la recherche

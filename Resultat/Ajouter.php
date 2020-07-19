@@ -15,11 +15,11 @@ function nouveauResultat ($informations)
 	);
 
 	// Récupération des infos de la table 'participants'
-	if (infosParticipant($joueur1) || infosParticipant($joueur1)) {
+	if (infosParticipant($joueur1) || infosParticipant($joueur2)) {
 		return __ERREURS__['002'];
 	}
 	// Jouent-ils dans la même ligue ?
-	if ($joueur2['ligue'] != $joueur2['ligue']){
+	if ($joueur1['ligue'] != $joueur2['ligue']){
 		return __ERREURS__['e106'];
 	}
 
