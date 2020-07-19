@@ -2,6 +2,8 @@
 session_start();
 // Numéro de la saison en cours
 define('__SAISON__',3);
+// Est-on en Playoffs ?
+define('__PLAYOFF__',1);
 // Nombre max de matches par saison
 define('__MAX_MATCHES__',1);
 
