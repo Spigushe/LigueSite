@@ -42,7 +42,7 @@
 
 <div class="container">
 	<footer class="container sticky-bottom bg-dark d-inline-flex py-3 px-1">
-		<img src="Afficher/CSS/Images/Logo.png" class="col-2" />
+		<img src="Afficher/CSS/Images/Logo.png" class="col-2 d-none d-lg-block" />
 
 		<div class="col-3">
 			<strong class="text-info custom-font">Commander League</strong><br>
@@ -72,7 +72,7 @@
 			</a>
 		</div>
 
-		<div class="col-3">
+		<div class="col-3 d-none d-md-block">
 			<strong class="text-info custom-font">Ressources</strong><br>
 			<a href="https://docs.google.com/document/d/18_-bRp1yxlMS9Vkz5fQ9ypG8J49oPEZkfBEp1QnhhV0"
 				target="_blank" class="text-decoration-none text-white">
@@ -102,7 +102,7 @@
 			</div>
 		</div>
 
-		<div class="col-3">
+		<div class="col-3 d-none d-md-block">
 			<strong class="text-info custom-font">Nous aider</strong><br>
 			L'ensemble de la ligue est disponible en open-source sur
 			<a href="https://github.com/Spigushe/LigueSite"
