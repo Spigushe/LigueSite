@@ -44,7 +44,7 @@
 	<footer class="container sticky-bottom bg-dark d-inline-flex py-3 px-1">
 		<img src="Afficher/CSS/Images/Logo.png" class="col-2 d-none d-lg-block" />
 
-		<div class="col-3">
+		<div class="">
 			<strong class="text-info custom-font">Commander League</strong><br>
 			Projet de ligue Duel Commander en ligne en alliant
 			<a href="https://discord.gg/vbTyu9A"
