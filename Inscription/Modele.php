@@ -246,7 +246,7 @@ function supprimerMatch ($joueur, $deckAdverse)
 /*****************************/
 function getInfoLigue ($params)
 {
-	$sql = "SELECT * FROM ligues WHERE num_saison = :s AND nom_ligue = :l;";
+	$sql = "SELECT * FROM ligues WHERE num_saison = :s AND nom_ligue LIKE :l;";
 	$donnees = array(
 		':s' => $params['saison'],
 		':l' => $params['ligue'],
