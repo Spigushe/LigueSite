@@ -5,12 +5,6 @@
  * @return "OK" ou error *
  *************************/
 function nouveauRole ($informations) {
-	// Contrôle de l'unicité de l'inscription
-	$controle = dejaInscrit($informations['id_discord']);
-	if ($controle != 'XXX') {
-		return __ERREURS__[$controle];
-	}
-
 	// Ajout dans la table des decks
 	ajoutRole($informations);
 
@@ -33,11 +27,11 @@ function ajoutRole ($parametres) {
 	/***** Champs de la table decks
 	@(), id_discord, nom_role
 	*****/
-	$sql = "INSERT INTO `roles` (id_discord, nom_role)".//
-						"VALUES (:id_discord, :nom_role);";
+	$sql = "INSERT INTO `roles` (id_role, nom_role)".//
+						"VALUES (:id_role, :nom_role);";
 
 	$donnees = array(
-		':id_discord'	=> $parametres['id_discord'],
+		':id_role'	=> $parametres['id_discord'],
 		':nom_role'		=> $parametres['nom']
 	);
 
