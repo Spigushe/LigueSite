@@ -79,7 +79,7 @@ function getJoueursRole ($role)
 {
 	$sql = "SELECT * FROM participants p
 			JOIN decks d ON p.id_discord = d.id_discord
-			WHERE p.nom_role = :r AND est_joue = 1;";
+			WHERE p.nom_role LIKE :r AND est_joue = 1;";
 	$donnees = array(':r'=>$role);
 	$requete = executerRequete($sql,$donnees);
 
