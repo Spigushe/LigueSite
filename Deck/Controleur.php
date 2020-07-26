@@ -9,5 +9,5 @@ if (isset($parametres['action']) && ($parametres['action'] != "")) {
 		default:
 			break;
 	}
-	Action($parametres);
+	echo Action($parametres);
 }

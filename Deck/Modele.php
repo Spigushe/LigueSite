@@ -42,7 +42,8 @@ function ajoutDeck ($parametres)
 
 function setAncienDeck ($id_discord)
 {
-	return executerRequete("UPDATE decks SET est_joue = '0' WHERE id_discord = :id;",array(':id'=>$id_discord));
+	executerRequete("UPDATE decks SET est_joue = '0' WHERE id_discord = :id;",array(':id'=>$id_discord));
+	return false;
 }
 
 /*****************************/
