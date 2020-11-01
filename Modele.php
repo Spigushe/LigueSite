@@ -3,7 +3,7 @@ require_once "BD/dicoErreurs.php";
 
 function getBdd() {
 	// Création de la connexion
-	$bdd = new PDO("sqlite:BD/database.sqlite");
+	$bdd = new PDO("sqlite:dist/BD/database.sqlite");
 	    $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	// On passe la connexion à la base de données
