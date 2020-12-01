@@ -11,6 +11,13 @@ function tableauClassement ($helper) {
 					Matchs<br>
 					<i><small>(<span class="text-success">Wins</span>-<span class="text-warning">Losses</span>)</small></i>
 				</th>
+				<?php if (isset($_GET['ligue']) && ($_GET['ligue'] == 'Elo-Aout')) : ?>
+				<th scope="col" class="align-middle">
+					<span href="#" data-toggle="tooltip" title="Info will change as new leagues are run">
+						ELO
+					</span>
+				</th>
+				<?php endif; ?>
 				<th scope="col" class="align-middle">
 					Score
 				</th>
@@ -43,13 +50,18 @@ function tableauClassement ($helper) {
 					<?= afficheGeneral($helper[$cle]['general']) ?>
 						<small>(<i><?= $helper[$cle]['hash'] ?></i>)</small>
 				</td>
-				<td>
+				<?php if (isset($_GET['ligue']) && ($_GET['ligue'] == 'Elo-Aout')) : ?>
+				<td class="align-middle">
+					<?= $helper[$cle]['elo'] ?>
+				</td>
+				<?php endif; ?>
+				<td class="align-middle">
 					<?= $helper[$cle]['tiebreakers']['matchPoints'] ?>
 				</td>
-				<td>
+				<td class="align-middle">
 					<?= $helper[$cle]['tiebreakers']['diffPoints'] ?>
 				</td>
-				<td>
+				<td class="align-middle">
 					<?= $helper[$cle]['tiebreakers']['tiedParticipants'] ?>
 				</td>
 			</tr>

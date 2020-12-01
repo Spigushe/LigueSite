@@ -11,20 +11,20 @@ Avoir un tableau global qui reprend toutes les infos d'une ligue et d'une saison
  ******   Fin    ******/
 
 $helper = array(); /** VARIABLE DE STOCKAGE **/
+$ligue = $_GET['ligue']; /** FIXING SQL QUERY **/
 
 /*****************************/
 /*****************************/
 /******                 ******/
-/******   LISTE LIGUES  ******/
+/****** LISTE DES POOLS ******/
 /******                 ******/
 /*****************************/
 /*****************************/
 $sql = "SELECT * FROM ligues
-		WHERE num_saison = :s
-		AND nom_ligue NOT LIKE '%Placement%'
-		AND nom_ligue NOT LIKE '%Elo-Aout%';";
+		WHERE num_saison = :s AND nom_ligue LIKE '%$ligue%';";
 // On prépare les variables de base
-$helper['infos']['saison'] = __SAISON__;
+$helper['infos']['saison'] = $_GET['saison'];
+$helper['infos']['ligue']  = $ligue;
 $helper['infos']['groupes'] = array();
 $helper['groupe'] = array();
 // On prépare le tableau de données
@@ -57,11 +57,10 @@ while ($resultat = $requete->fetch()) {
 $sql = "SELECT * FROM resultats r
 		JOIN decks d ON d.id_deck = r.id_deck1
 		WHERE r.id_deck1 = :id AND
-		saison = :s AND ligue = :l;";
-// On parcourt les ligues
+		saison = :s AND ligue LIKE '%$ligue%';";
+// On parcourt les groupes
 for ($i = 0; $i < count($helper['infos']['groupes']); $i++) {
 	$groupe = $helper['infos']['groupes'][$i];
-	$donnees[':l'] = preg_split("/-/",$groupe)[0];
 	// On parcourt la liste des decks
 	foreach ($helper['groupe'][$groupe]['decks'] as $key => $value) {
 		// On dit sur quel deck on fait la recherche

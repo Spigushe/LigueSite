@@ -15,6 +15,21 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Saison 4
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				    <a class="dropdown-item " href="/Saison-4/Elo-Aout">Elo Aout</a>
+					<!-- Séparateur de liste -->
+					<div class="dropdown-divider"></div>
+					<!-- Séparateur de liste -->
+					<a class="dropdown-item" href="/Saison-4/Bronze">Ligue Bronze</a>
+					<a class="dropdown-item" href="/Saison-4/Argent">Ligue Argent</a>
+					<a class="dropdown-item" href="/Saison-4/Or">Ligue Or</a>
+					<a class="dropdown-item" href="/Saison-4/Platine">Ligue Platine</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Saison 3
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">

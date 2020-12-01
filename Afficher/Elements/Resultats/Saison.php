@@ -20,11 +20,9 @@ $helper = array(); /** VARIABLE DE STOCKAGE **/
 /*****************************/
 /*****************************/
 $sql = "SELECT * FROM ligues
-		WHERE num_saison = :s
-		AND nom_ligue NOT LIKE '%Placement%'
-		AND nom_ligue NOT LIKE '%Elo-Aout%';";
+		WHERE num_saison = :s AND nom_ligue NOT LIKE '%Placement%';";
 // On prépare les variables de base
-$helper['infos']['saison'] = __SAISON__;
+$helper['infos']['saison'] = (!isset($_GET['saison']) || ($_GET['saison'] == "")) ? __SAISON__ : $_GET['saison'];
 $helper['infos']['groupes'] = array();
 $helper['groupe'] = array();
 // On prépare le tableau de données
@@ -61,7 +59,7 @@ $sql = "SELECT * FROM resultats r
 // On parcourt les ligues
 for ($i = 0; $i < count($helper['infos']['groupes']); $i++) {
 	$groupe = $helper['infos']['groupes'][$i];
-	$donnees[':l'] = preg_split("/-/",$groupe)[0];
+	$donnees[':l'] = $groupe;
 	// On parcourt la liste des decks
 	foreach ($helper['groupe'][$groupe]['decks'] as $key => $value) {
 		// On dit sur quel deck on fait la recherche

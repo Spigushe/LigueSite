@@ -117,9 +117,10 @@ function inscriptionJoueur ($parametres)
 	$participant = array(
 		':id_discord'	=>	$parametres['id'],
 		':pseudo'		=>	$parametres['pseudo'],
-		':nom_role'		=>	'Placement'
+		':nom_role'		=>	'Placement',
+		':elo'			=>	__ELO__,
 	);
-	$sql = "INSERT INTO `participants` (id_discord, pseudo, nom_role) VALUES (:id_discord, :pseudo, :nom_role);";
+	$sql = "INSERT INTO `participants` (id_discord, pseudo, nom_role, elo) VALUES (:id_discord, :pseudo, :nom_role, :elo);";
 	executerRequete($sql, $participant);
 	return "OK--" . getIdRole('Placement');
 }
@@ -143,7 +144,7 @@ function departJoueur ($id)
 /*****************************/
 function getIdRole ($nom)
 {
-	$sql = "SELECT id_discord FROM roles WHERE nom_role = :nom ORDER BY id_discord DESC;";
+	$sql = "SELECT id_discord FROM roles WHERE nom_role LIKE :nom ORDER BY id_discord DESC;";
 	return executerRequete($sql,array(':nom'=>$nom))->fetchColumn();
 }
 
